@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Store</title>
+</head>
+<body>
+<h1>Онлайн магазин різноманітних товарів | <a href="/login">Вийти</a></h1>
+
+<h3>Список товарів</h3>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Зображення</th>
+        <th>ID</th>
+        <th>Категорія</th>
+        <th>Назва</th>
+        <th>Опис</th>
+        <th>Ціна</th>
+        <th>Кількість</th>
+        <th>Продавець</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+        <td>
+            <img th:src="${product.imageUrl}" alt="Product Image" width="100"/>
+        </td>
+        <td th:text="${product.id}"></td>
+        <td th:text="${product.category}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${product.price} + '$'"></td>
+        <td th:text="${product.number}"></td>
+        <td th:text="${product.seller}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+<h3>Створення публікації</h3>
+<form th:action="'/create-product'" method="post" enctype="multipart/form-data">
+
+    <label for="name">Назва продукту:</label>
+    <input type="text" id="name" name="name"/><br><br>
+
+    <label for="description">Опис:</label>
+    <input type="text" id="description" name="description"/><br><br>
+
+    <label for="category">Категорія:</label>
+    <input type="text" id="category" name="category"/><br><br>
+
+    <label for="image">Завантажити зображення:</label>
+    <input type="file" id="image" name="image"/><br><br>
+
+    <label for="price">Ціна (за 1 шт.):</label>
+    <input type="number" id="price" name="price"/><br><br>
+
+    <label for="number">Кількість:</label>
+    <input type="number" id="number" name="number"/><br><br>
+
+    <label for="seller">Продавець:</label>
+    <input type="text" id="seller" name="seller"/><br><br>
+
+    <input type="submit" value="Опублікувати">
+</form>
+
+</body>
+</html>
