@@ -16,7 +16,9 @@
     <input type="hidden" name="_csrf" th:value="${_csrf.token}">
     <input type="submit" value="Увійти">
 </form>
-<a href="/registration">Зареєструватися</a>
+<h4>Не маєте акаунту? <a href="/registration">Зареєструватися</a></h4>
+
+<h4 th:if="${errorMessage != null}" th:text="${errorMessage}" style="color: red"></h4>
 
 </body>
 </html>

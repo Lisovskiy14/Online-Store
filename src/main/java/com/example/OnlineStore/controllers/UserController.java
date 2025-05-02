@@ -2,11 +2,13 @@ package com.example.OnlineStore.controllers;
 
 import com.example.OnlineStore.models.User;
 import com.example.OnlineStore.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -14,7 +16,12 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/login")
-    public String login() {
+    public String login(HttpServletRequest request, Model model) {
+        String errorMessage = (String) request.getSession().getAttribute("errorMessage");
+        if (errorMessage != null) {
+            model.addAttribute("errorMessage", errorMessage);
+            request.getSession().removeAttribute("errorMessage");
+        }
         return "login-page";
     }
 
@@ -24,8 +31,8 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String registration(User user, Model model) {
-        if (userService.createUser(user)) {
+    public String registration(User user, @RequestParam(defaultValue = "false") boolean isSeller, Model model) {
+        if (userService.createUser(user, isSeller)) {
             return "redirect:/login";
         }
         model.addAttribute("errorMessage", String.format("Користувач з логіном %s вже існує!", user.getUsername()));

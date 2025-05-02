@@ -13,11 +13,16 @@
     <input type="text" id="username" name="username"><br><br>
     Пароль: <label for="password"></label>
     <input type="text" id="password" name="password"><br><br>
+
+    <input type="checkbox" id="isSeller" name="isSeller">
+    <label for="isSeller">Зареєструватися як продавець</label><br><br>
+
     <input type="hidden" name="_csrf" th:value="${_csrf.token}">
     <input type="submit" value="Зареєструватися">
 </form>
+<h4>Вже маєте акаунт? <a href="/login">Авторизуйтеся</a></h4>
 
-<h3 th:if="${errorMessage != null}" th:text="${errorMessage}" style="color: red"></h3>
+<h4 th:if="${errorMessage != null}" th:text="${errorMessage}" style="color: red"></h4>
 
 </body>
 </html>
