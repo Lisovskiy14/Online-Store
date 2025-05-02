@@ -5,7 +5,11 @@
     <title>Online Store</title>
 </head>
 <body>
-<h1>Онлайн магазин різноманітних товарів | <a href="/login">Вийти</a></h1>
+<h1>Онлайн магазин різноманітних товарів</h1>
+<form th:action="'/logout'" method="post">
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+    <input type="submit" value="Вийти">
+</form>
 
 <h3>Список товарів</h3>
 <table border="1">
@@ -30,13 +34,12 @@
         <td th:text="${product.category}"></td>
         <td th:text="${product.name}"></td>
         <td th:text="${product.description}"></td>
-        <td th:text="${product.price} + '$'"></td>
+        <td th:text="${product.price} + '₴'"></td>
         <td th:text="${product.number}"></td>
         <td th:text="${product.seller}"></td>
     </tr>
     </tbody>
 </table>
-
 
 <h3>Створення публікації</h3>
 <form th:action="'/create-product'" method="post" enctype="multipart/form-data">

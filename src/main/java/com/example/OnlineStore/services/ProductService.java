@@ -11,7 +11,8 @@ import java.util.List;
 
 @Service
 public class ProductService {
-    private final String GLOBAL_IMAGE_PATH = "../../../resources/products-images/";
+    private final String ABSOLUTE_IMAGE_PATH = "C:\\Users\\nazar\\OneDrive\\Рабочий стол\\Education\\SI coursework\\OnlineStore\\src\\main\\resources\\static\\products-images\\";
+    private final String RELATIVE_IMAGE_PATH = "/products-images/";
     private final ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {
@@ -35,12 +36,12 @@ public class ProductService {
         if (!file.isEmpty()) {
             try {
                 String fileName = file.getOriginalFilename();
-                String filePath = GLOBAL_IMAGE_PATH + fileName;
+                String filePath = ABSOLUTE_IMAGE_PATH + fileName;
 
                 File destinationfile = new File(filePath);
                 file.transferTo(destinationfile);
 
-                return filePath;
+                return RELATIVE_IMAGE_PATH + fileName;
             } catch (Exception e) {
                 e.printStackTrace();
             }

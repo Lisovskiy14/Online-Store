@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Реєстрація</title>
+</head>
+<body>
+<h1>Інтернет-магазин</h1>
+<h4>Реєстрація</h4>
+
+<form action="/registration" method="post">
+    Логін: <label for="username"></label>
+    <input type="text" id="username" name="username"><br><br>
+    Пароль: <label for="password"></label>
+    <input type="text" id="password" name="password"><br><br>
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+    <input type="submit" value="Зареєструватися">
+</form>
+
+<h3 th:if="${errorMessage != null}" th:text="${errorMessage}" style="color: red"></h3>
+
+</body>
+</html>

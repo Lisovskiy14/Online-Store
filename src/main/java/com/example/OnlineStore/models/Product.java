@@ -18,6 +18,7 @@ public class Product {
 
     private String category;
 
+    @Column(length = 500)
     private String description;
 
     private int number;
