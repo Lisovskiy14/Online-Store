@@ -2,7 +2,9 @@ package com.example.OnlineStore.services;
 
 import com.example.OnlineStore.models.Product;
 import com.example.OnlineStore.models.User;
+import com.example.OnlineStore.repositories.CategoryRepository;
 import com.example.OnlineStore.repositories.ProductRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,14 +12,12 @@ import java.io.File;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ProductService {
     private final String ABSOLUTE_IMAGE_PATH = "C:\\Users\\nazar\\OneDrive\\Рабочий стол\\Education\\SI coursework\\OnlineStore\\src\\main\\resources\\static\\products-images\\";
     private final String RELATIVE_IMAGE_PATH = "/products-images/";
     private final ProductRepository productRepository;
-
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    private final CategoryRepository categoryRepository;
 
     public void createProduct(Product product) {
         //product.setSeller(user.getUsername());

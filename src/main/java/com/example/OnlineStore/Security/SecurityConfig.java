@@ -25,6 +25,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/login", "/registration").permitAll()
+                        .requestMatchers("/create-product").hasAuthority("ROLE_SELLER")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

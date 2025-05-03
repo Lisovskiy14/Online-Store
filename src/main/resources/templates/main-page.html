@@ -1,15 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Online Store</title>
 </head>
 <body>
-<h1>Онлайн магазин різноманітних товарів</h1>
+<form th:action="'/'" method="get">
+    <input type="submit" value="На головну">
+</form>
+
+<form th:action="'/cart'" method="get">
+    <input type="submit" value="Кошик">
+</form>
+
+<form th:action="'/account'" method="get">
+    <input type="submit" value="Акаунт">
+</form>
+
+<h1>Інтернет-магазин різноманітних товарів</h1>
 <form th:action="'/logout'" method="post">
     <input type="hidden" name="_csrf" th:value="${_csrf.token}">
     <input type="submit" value="Вийти">
 </form>
+
+<h3>Каталог</h3>
+<div th:each="category : ${categories}">
+    <!-- Посилання буде виглядати як /catalog/category/noutbuky-i-kompyutery -->
+    <a th:href="@{/catalog/category/{slug}(slug=${category.slug})}"
+       th:text="${category.name}">Назва категорії</a>
+</div>
+
 
 <h3>Список товарів</h3>
 <table border="1">
@@ -31,42 +51,59 @@
             <img th:src="${product.imageUrl}" alt="Product Image" width="100"/>
         </td>
         <td th:text="${product.id}"></td>
-        <td th:text="${product.category}"></td>
+        <td th:text="${product.category.name}"></td>
         <td th:text="${product.name}"></td>
         <td th:text="${product.description}"></td>
         <td th:text="${product.price} + '₴'"></td>
         <td th:text="${product.number}"></td>
-        <td th:text="${product.seller}"></td>
+        <td th:text="${product.seller.username}"></td>
     </tr>
     </tbody>
 </table>
 
-<h3>Створення публікації</h3>
-<form th:action="'/create-product'" method="post" enctype="multipart/form-data">
+<div sec:authorize="hasRole('ROLE_SELLER')">
+    <h3>Створення публікації</h3>
+    <form th:action="'/create-product'" method="post" enctype="multipart/form-data">
 
-    <label for="name">Назва продукту:</label>
-    <input type="text" id="name" name="name"/><br><br>
+        <label for="name">Назва продукту:</label>
+        <input type="text" id="name" name="name"/><br><br>
 
-    <label for="description">Опис:</label>
-    <input type="text" id="description" name="description"/><br><br>
+        <label for="description">Опис:</label>
+        <input type="text" id="description" name="description"/><br><br>
 
-    <label for="category">Категорія:</label>
-    <input type="text" id="category" name="category"/><br><br>
+        <label for="category">Категорія:</label>
+        <select id="category" name="category" required>
+            <option value="">Виберіть категорію</option>
+            <option th:each="category : ${categories}"
+                    th:value="${category.id}"
+                    th:text="${category.name}">
+            </option>
+        </select><br><br>
 
-    <label for="image">Завантажити зображення:</label>
-    <input type="file" id="image" name="image"/><br><br>
+        <label for="image">Завантажити зображення:</label>
+        <input type="file" id="image" name="image"/><br><br>
 
-    <label for="price">Ціна (за 1 шт.):</label>
-    <input type="number" id="price" name="price"/><br><br>
+        <label for="price">Ціна (за 1 шт.):</label>
+        <input type="number" id="price" name="price"/><br><br>
 
-    <label for="number">Кількість:</label>
-    <input type="number" id="number" name="number"/><br><br>
+        <label for="number">Кількість:</label>
+        <input type="number" id="number" name="number"/><br><br>
 
-    <label for="seller">Продавець:</label>
-    <input type="text" id="seller" name="seller"/><br><br>
+        <input type="submit" value="Опублікувати">
+    </form>
+</div>
 
-    <input type="submit" value="Опублікувати">
-</form>
+<!--<h3>Створення категорії</h3>-->
+<!--<form th:action="'/create-category'" method="post">-->
+
+<!--    <label for="name">Назва категорії</label>-->
+<!--    <input type="text" id="name" name="name"/><br><br>-->
+
+<!--    <label for="slug">Slug категорії</label>-->
+<!--    <input type="text" id="slug" name="slug"/><br><br>-->
+
+<!--    <input type="submit" value="Створити">-->
+<!--</form>-->
 
 </body>
 </html>

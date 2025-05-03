@@ -4,11 +4,8 @@ import com.example.OnlineStore.models.User;
 import com.example.OnlineStore.models.enums.Role;
 import com.example.OnlineStore.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +30,9 @@ public class UserService {
         System.out.println("User created with username: " + username);
 
         return true;
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 }
