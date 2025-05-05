@@ -1,97 +1,125 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <meta charset="UTF-8">
     <title>Online Store</title>
 </head>
 <body>
-<form th:action="'/'" method="get">
-    <input type="submit" value="На головну">
-</form>
 
-<form th:action="'/cart'" method="get">
-    <input type="submit" value="Кошик">
-</form>
+<div class="container">
 
-<form th:action="'/account'" method="get">
-    <input type="submit" value="Акаунт">
-</form>
+    <header class="header">
+        <nav class="nav">
+            <form th:action="'/'" method="get">
+                <button type="submit" class="home-button">
+                    <i class='bx bxs-home'></i>
+                </button>
+            </form>
 
-<h1>Інтернет-магазин різноманітних товарів</h1>
-<form th:action="'/logout'" method="post">
-    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-    <input type="submit" value="Вийти">
-</form>
+            <h1>Інтернет-магазин різноманітних товарів</h1>
 
-<h3>Каталог</h3>
-<div th:each="category : ${categories}">
-    <!-- Посилання буде виглядати як /catalog/category/noutbuky-i-kompyutery -->
-    <a th:href="@{/catalog/category/{slug}(slug=${category.slug})}"
-       th:text="${category.name}">Назва категорії</a>
+            <div class="right-buttons">
+                <form th:action="'/cart'" method="get">
+                    <button type="submit" class="cart-button">
+                        <i class='bx bxs-cart'></i>
+                    </button>
+                </form>
+
+                <form th:action="'/account'" method="get">
+                    <button type="submit" class="account-button">
+                        <i class='bx bxs-user'></i>
+                    </button>
+                </form>
+
+                <form th:action="'/logout'" method="post">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    <button type="submit" class="account-button">
+                        <i class='bx bx-log-out' ></i>
+                    </button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3>Каталог</h3>
+        </div>
+
+        <div th:each="category : ${categories}" class="category">
+            <a th:href="@{/catalog/category/{slug}(slug=${category.slug})}"
+               th:text="${category.name}">Назва категорії</a>
+        </div>
+    </div>
+
+    <div class="main">
+
+        <h3>Наші товари</h3>
+        <div class="products-grid">
+            <div th:each="product : ${products}" class="product-card">
+                <a th:href="@{/product/{id}(id=${product.id})}" class="product-link">
+                    <div class="product-image">
+                        <img th:src="${product.imageUrl}" th:alt="${product.name}" />
+                    </div>
+                    <div class="product-info">
+                        <h4 class="product-name" th:text="${product.name}"></h4>
+                        <p class="product-price" th:text="${product.price} + '₴'"></p>
+                    </div>
+                </a>
+                <form th:actiob="@{/cart/add}" method="post" class="add-to-cart-form">
+                    <input type="hidden" name="productId" th:value="${product.id}" />
+                    <button type="submit" class="add-to-cart-button">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div sec:authorize="hasRole('ROLE_SELLER')">
+            <h3>Створення публікації</h3>
+            <form th:action="'/create-product'" method="post" enctype="multipart/form-data">
+
+                <label for="name">Назва продукту:</label>
+                <input type="text" id="name" name="name"/><br><br>
+
+                <label for="description">Опис:</label>
+                <input type="text" id="description" name="description"/><br><br>
+
+                <label for="category">Категорія:</label>
+                <select id="category" name="category" required>
+                    <option value="">Виберіть категорію</option>
+                    <option th:each="category : ${categories}"
+                            th:value="${category.id}"
+                            th:text="${category.name}">
+                    </option>
+                </select><br><br>
+
+                <label for="image">Завантажити зображення:</label>
+                <input type="file" id="image" name="image"/><br><br>
+
+                <label for="price">Ціна (за 1 шт.):</label>
+                <input type="number" id="price" name="price"/><br><br>
+
+                <label for="number">Кількість:</label>
+                <input type="number" id="number" name="number"/><br><br>
+
+                <input type="submit" value="Опублікувати">
+            </form>
+        </div>
+    </div>
+
 </div>
 
+<main>
 
-<h3>Список товарів</h3>
-<table border="1">
-    <thead>
-    <tr>
-        <th>Зображення</th>
-        <th>ID</th>
-        <th>Категорія</th>
-        <th>Назва</th>
-        <th>Опис</th>
-        <th>Ціна</th>
-        <th>Кількість</th>
-        <th>Продавець</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="product : ${products}">
-        <td>
-            <img th:src="${product.imageUrl}" alt="Product Image" width="100"/>
-        </td>
-        <td th:text="${product.id}"></td>
-        <td th:text="${product.category.name}"></td>
-        <td th:text="${product.name}"></td>
-        <td th:text="${product.description}"></td>
-        <td th:text="${product.price} + '₴'"></td>
-        <td th:text="${product.number}"></td>
-        <td th:text="${product.seller.username}"></td>
-    </tr>
-    </tbody>
-</table>
+</main>
 
-<div sec:authorize="hasRole('ROLE_SELLER')">
-    <h3>Створення публікації</h3>
-    <form th:action="'/create-product'" method="post" enctype="multipart/form-data">
 
-        <label for="name">Назва продукту:</label>
-        <input type="text" id="name" name="name"/><br><br>
-
-        <label for="description">Опис:</label>
-        <input type="text" id="description" name="description"/><br><br>
-
-        <label for="category">Категорія:</label>
-        <select id="category" name="category" required>
-            <option value="">Виберіть категорію</option>
-            <option th:each="category : ${categories}"
-                    th:value="${category.id}"
-                    th:text="${category.name}">
-            </option>
-        </select><br><br>
-
-        <label for="image">Завантажити зображення:</label>
-        <input type="file" id="image" name="image"/><br><br>
-
-        <label for="price">Ціна (за 1 шт.):</label>
-        <input type="number" id="price" name="price"/><br><br>
-
-        <label for="number">Кількість:</label>
-        <input type="number" id="number" name="number"/><br><br>
-
-        <input type="submit" value="Опублікувати">
-    </form>
-</div>
 
 <!--<h3>Створення категорії</h3>-->
 <!--<form th:action="'/create-category'" method="post">-->

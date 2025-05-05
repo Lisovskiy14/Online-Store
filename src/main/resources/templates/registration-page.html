@@ -2,27 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/authorization.css}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Реєстрація</title>
 </head>
 <body>
-<h1>Інтернет-магазин</h1>
-<h4>Реєстрація</h4>
 
-<form action="/registration" method="post">
-    Логін: <label for="username"></label>
-    <input type="text" id="username" name="username"><br><br>
-    Пароль: <label for="password"></label>
-    <input type="text" id="password" name="password"><br><br>
+<div class="wrapper">
+    <form action="/registration" method="post">
+        <h1>Реєстрація</h1>
 
-    <input type="checkbox" id="isSeller" name="isSeller">
-    <label for="isSeller">Зареєструватися як продавець</label><br><br>
+        <div class="error-message">
+            <p th:if="${errorMessage != null}" th:text="${errorMessage}"></p>
+        </div>
 
-    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-    <input type="submit" value="Зареєструватися">
-</form>
-<h4>Вже маєте акаунт? <a href="/login">Авторизуйтеся</a></h4>
+        <div class="input-box">
+            <input type="text" placeholder="Username" name="username" required>
+            <i class='bx bxs-user'></i>
+        </div>
 
-<h4 th:if="${errorMessage != null}" th:text="${errorMessage}" style="color: red"></h4>
+        <div class="input-box">
+            <input type="password" placeholder="Password" name="password" required>
+            <i class='bx bxs-lock-alt' ></i>
+        </div>
+
+        <div class="checkbox-container">
+            <label>
+                <input type="checkbox"> Зареєструватись як продавець
+            </label>
+        </div>
+
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+        <button type="submit" class="btn">Зареєструватися</button>
+
+        <div class="register-link">
+            <p>Уже маєте акаунт? <a href="/login">Авторизуватися</a></p>
+        </div>
+
+    </form>
+</div>
+
+
+<!--<h1>Інтернет-магазин</h1>-->
+<!--<h4>Реєстрація</h4>-->
+
+<!--<form action="/registration" method="post">-->
+<!--    Логін: <label for="username"></label>-->
+<!--    <input type="text" id="username" name="username" required><br><br>-->
+<!--    Пароль: <label for="password"></label>-->
+<!--    <input type="text" id="password" name="password" required><br><br>-->
+
+<!--    <input type="checkbox" id="isSeller" name="isSeller">-->
+<!--    <label for="isSeller">Зареєструватися як продавець</label><br><br>-->
+
+<!--    <input type="hidden" name="_csrf" th:value="${_csrf.token}">-->
+<!--    <input type="submit" value="Зареєструватися">-->
+<!--</form>-->
+<!--<h4>Вже маєте акаунт? <a href="/login">Авторизуйтеся</a></h4>-->
+
+<!--<h4 th:if="${errorMessage != null}" th:text="${errorMessage}" style="color: red"></h4>-->
 
 </body>
 </html>

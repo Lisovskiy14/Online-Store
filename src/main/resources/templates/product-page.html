@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${product.name} + ' - Інтернет магазин'">Online Store</title>
+</head>
+<body>
+
+<form th:action="'/'" method="get">
+    <input type="submit" value="На головну">
+</form>
+
+<form th:action="'/cart'" method="get">
+    <input type="submit" value="Кошик">
+</form>
+
+<form th:action="'/account'" method="get">
+    <input type="submit" value="Акаунт">
+</form>
+
+<main>
+    <div>
+        <img th:src="${product.imageUrl}" th:alt="${product.name}" width="300"/>
+    </div>
+    <div>
+        <h4 th:text="'Назва товару: ' + ${product.name}"></h4>
+        <h4 th:text="'Опис: ' + ${product.description}"></h4>
+        <h4 th:text="'Категорія: ' + ${product.category.name}"></h4>
+        <h4 th:text="'Кількість: ' + ${product.number}"></h4>
+        <h4 th:text="'Ціна (за 1 шт.): ' + ${product.price}"></h4>
+        <h4 th:text="'Продавець: ' + ${product.seller.username}"></h4>
+    </div>
+</main>
+
+</body>
+</html>

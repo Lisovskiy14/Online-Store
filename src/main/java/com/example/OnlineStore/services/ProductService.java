@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @AllArgsConstructor
@@ -17,10 +18,13 @@ public class ProductService {
     private final String ABSOLUTE_IMAGE_PATH = "C:\\Users\\nazar\\OneDrive\\Рабочий стол\\Education\\SI coursework\\OnlineStore\\src\\main\\resources\\static\\products-images\\";
     private final String RELATIVE_IMAGE_PATH = "/products-images/";
     private final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
+
+    public Product getProductById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Товар не знайдено"));
+    }
 
     public void createProduct(Product product) {
-        //product.setSeller(user.getUsername());
         productRepository.save(product);
     }
 
