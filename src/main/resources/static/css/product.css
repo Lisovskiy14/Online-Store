@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&family=Overpass:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "M PLUS 1p", sans-serif;
+}
+
+/*Структуризація*/
+.container {
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "sidebar main"
+        "footer footer";
+    grid-template-rows: 100px auto auto;
+    grid-template-columns: minmax(300px, 600px) auto;
+    padding: 10px 300px 10px;
+}
+
+.header {
+    grid-area: header;
+    background-color: #cbe691;
+    border-radius: 20px;
+    padding: 20px 50px 20px;
+    margin: 10px;
+}
+
+.main {
+    grid-area: main;
+    background-color: white;
+    padding: 20px;
+    margin: 40px 200px 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sidebar {
+    grid-area: sidebar;
+    border-radius: 20px;
+    padding: 0 0 10px;
+    margin: 10px 0 0 200px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.footer {
+    grid-area: footer;
+    background-color: white;
+    padding: 20px;
+    margin: 40px 10px 10px 10px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+/*Header*/
+.header nav {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.header h1 {
+    flex: 1;
+    height: 100%;
+    text-align: center;
+}
+
+.right-buttons {
+    display: flex;
+    margin-left: auto;
+    gap: 20px;
+}
+
+.header button {
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header button:hover {
+    background: #333;
+    color: white;
+}
+
+.header button i {
+    font-size: 24px;
+    transition: transform 0.2s ease;
+}
+
+.header button:hover i {
+    transform: scale(1.2);
+}
+
+
+/*SideBar*/
+.sidebar #seller {
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.sidebar #seller:hover {
+    text-decoration: underline;
+}
+
+
+/*Main*/
+.main .title {
+    display: flex;
+    gap: 80px;
+    align-items: center;
+}
+
+.main .title h1 {
+    font-size: 32px;
+}
+
+.main .title .category {
+    background: #333;
+    color: white;
+    padding: 0 20px;
+    border-radius: 15px;
+}
+
+.main .title .category p {
+    font-size: 24px;
+}
+
+.main .description p {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.main .lower-information {
+    display: flex;
+    gap: 50px;
+    font-size: 22px;
+    margin: 70px 10px 0;
+    align-items: center;
+}
+
+.main .lower-information .in-stock {
+    display: flex;
+    align-items: center;
+}
+
+.main .lower-information .in-stock .green-point {
+    margin-right: 10px;
+    font-size: 14px;
+    color: #7fd42a;
+}
+
+.main .lower-information .in-stock .red-point {
+    margin-right: 10px;
+    font-size: 14px;
+    color: red;
+}
+
+.main .lower-information form {
+    width: 250px;
+    height: 50px;
+}
+
+.main .lower-information form button {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 20px;
+    background: #0890cf;
+    padding: 10px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.main .lower-information form button:hover {
+    background: #0d77bd;
+    transform: scale(1.05);
+}
+
+.main .lower-information form button .hover {
+    display: none;
+}
+
+.main .lower-information form button:hover .default  {
+    display: none;
+}
+
+.main .lower-information form button:hover .hover  {
+    display: block;
+}
+
+
+/*Footer*/
+
+.footer .h1 {
+    font-size: 28px;
+    text-align: center;
+}

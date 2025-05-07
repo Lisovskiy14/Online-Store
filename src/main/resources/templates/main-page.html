@@ -5,7 +5,7 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <meta charset="UTF-8">
-    <title>Online Store</title>
+    <title>Інтернет магазин</title>
 </head>
 <body>
 
@@ -22,7 +22,7 @@
             <h1>Інтернет-магазин різноманітних товарів</h1>
 
             <div class="right-buttons">
-                <form th:action="'/cart'" method="get">
+                <form th:action="'/cart/get'" method="get">
                     <button type="submit" class="cart-button">
                         <i class='bx bxs-cart'></i>
                     </button>
@@ -56,7 +56,6 @@
     </div>
 
     <div class="main">
-
         <h3>Наші товари</h3>
         <div class="products-grid">
             <div th:each="product : ${products}" class="product-card">
@@ -66,11 +65,13 @@
                     </div>
                     <div class="product-info">
                         <h4 class="product-name" th:text="${product.name}"></h4>
-                        <p class="product-price" th:text="${product.price} + '₴'"></p>
+                        <p class="product-price" th:text="${#numbers
+                            .formatInteger(product.price, 0, 'POINT')
+                            ?.replace('.', ' ')} + ' ₴'"></p>
                     </div>
                 </a>
-                <form th:actiob="@{/cart/add}" method="post" class="add-to-cart-form">
-                    <input type="hidden" name="productId" th:value="${product.id}" />
+                <form th:action="@{/cart/add}" method="post" class="add-to-cart-form">
+                    <input type="hidden" name="product_id" th:value="${product.id}" />
                     <button type="submit" class="add-to-cart-button">
                         <i class="fas fa-shopping-cart"></i>
                     </button>

@@ -1,36 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" th:href="@{/css/product.css}">
     <meta charset="UTF-8">
-    <title th:text="${product.name} + ' - Інтернет магазин'">Online Store</title>
+    <title th:text="${product.name} + ' - Інтернет магазин'"></title>
 </head>
 <body>
+<div class="container">
+    <header class="header">
+        <nav class="nav">
+            <form th:action="'/'" method="get">
+                <button type="submit" class="home-button">
+                    <i class='bx bxs-home'></i>
+                </button>
+            </form>
 
-<form th:action="'/'" method="get">
-    <input type="submit" value="На головну">
-</form>
+            <h1>Інтернет-магазин різноманітних товарів</h1>
 
-<form th:action="'/cart'" method="get">
-    <input type="submit" value="Кошик">
-</form>
+            <div class="right-buttons">
+                <form th:action="'/cart'" method="get">
+                    <button type="submit" class="cart-button">
+                        <i class='bx bxs-cart'></i>
+                    </button>
+                </form>
 
-<form th:action="'/account'" method="get">
-    <input type="submit" value="Акаунт">
-</form>
+                <form th:action="'/account'" method="get">
+                    <button type="submit" class="account-button">
+                        <i class='bx bxs-user'></i>
+                    </button>
+                </form>
 
-<main>
-    <div>
-        <img th:src="${product.imageUrl}" th:alt="${product.name}" width="300"/>
+                <form th:action="'/logout'" method="post">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    <button type="submit" class="account-button">
+                        <i class='bx bx-log-out' ></i>
+                    </button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <div class="sidebar">
+        <img th:src="${product.imageUrl}" th:alt="${product.name}"/>
+        <a th:href="@{/seller/{username}(username=${product.seller.username})}"
+           id="seller" th:text="'Продавець - ' + ${product.seller.username}"></a>
     </div>
-    <div>
-        <h4 th:text="'Назва товару: ' + ${product.name}"></h4>
-        <h4 th:text="'Опис: ' + ${product.description}"></h4>
-        <h4 th:text="'Категорія: ' + ${product.category.name}"></h4>
-        <h4 th:text="'Кількість: ' + ${product.number}"></h4>
-        <h4 th:text="'Ціна (за 1 шт.): ' + ${product.price}"></h4>
-        <h4 th:text="'Продавець: ' + ${product.seller.username}"></h4>
-    </div>
-</main>
+
+    <main class="main">
+        <div class="title">
+            <h1 th:text="${product.name}"></h1>
+            <div class="category" >
+                <p th:text="${product.category.name}"></p>
+            </div>
+        </div>
+
+        <div class="description">
+            <p th:text="${product.description}"></p>
+        </div>
+
+        <div class="lower-information">
+            <div class="in-stock">
+                <div th:class="${product.number > 0 ? 'green-point' : 'red-point'}">
+                    <i class='bx bxs-circle'></i>
+                </div>
+                <p th:text="${product.number > 0}? 'В наявності' : 'Немає в наявності'"></p>
+            </div>
+
+            <form th:action="@{/cart/add}" method="post">
+                <input type="hidden" name="product_id" th:value="${product.id}" />
+                <button type="submit">
+                    <span class="default" th:text="${#numbers
+                            .formatInteger(product.price, 0, 'POINT')
+                            ?.replace('.', ' ')} + ' ₴'"></span>
+                    <span class="hover">Додати в кошик</span>
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <h1>Відгуки</h1>
+    </footer>
+</div>
 
 </body>
 </html>

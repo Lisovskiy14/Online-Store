@@ -30,6 +30,18 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
+    @Column(length = 20)
+    private String firstName;
+
+    @Column(length = 20)
+    private String lastName;
+
+    @Column(length = 10)
+    private String phoneNumber;
+
+    @Column(length = 100)
+    private String address;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

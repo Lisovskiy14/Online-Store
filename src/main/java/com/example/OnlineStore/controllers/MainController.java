@@ -5,6 +5,7 @@ import com.example.OnlineStore.models.Product;
 import com.example.OnlineStore.services.CategoryService;
 import com.example.OnlineStore.services.ProductService;
 import com.example.OnlineStore.services.UserService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -49,15 +50,6 @@ public class MainController {
     public String createCategory(@ModelAttribute Category category) {
         categoryService.addCategory(category);
 
-        return "redirect:/";
-    }
-
-    @GetMapping("/cart")
-    public String cart(HttpServletRequest request, Model model) {
-        System.out.println();
-        System.out.println("User: " + request.getRemoteUser());
-        System.out.println("Principal: " + request.getUserPrincipal());
-        System.out.println();
         return "redirect:/";
     }
 

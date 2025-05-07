@@ -1,6 +1,7 @@
 package com.example.OnlineStore.controllers;
 
 import com.example.OnlineStore.models.User;
+import com.example.OnlineStore.services.CartService;
 import com.example.OnlineStore.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final CartService cartService;
 
     @GetMapping("/login")
     public String login(HttpServletRequest request, Model model) {
@@ -33,6 +35,7 @@ public class UserController {
     @PostMapping("/registration")
     public String registration(User user, @RequestParam(defaultValue = "false") boolean isSeller, Model model) {
         if (userService.createUser(user, isSeller)) {
+            cartService.createCart(user);
             return "redirect:/login";
         }
         model.addAttribute("errorMessage", String.format("Користувач з логіном %s вже існує!", user.getUsername()));

@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&family=Overpass:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "M PLUS 1p", sans-serif;
+}
+
+/*Структуризація*/
+.container {
+    display: grid;
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    grid-template-rows: 100px auto auto;
+    grid-template-columns: auto;
+    /*min-height: 100vh;*/
+    gap: 0;
+    padding: 10px 300px;
+}
+
+.header {
+    grid-area: header;
+    background-color: #cbe691;
+    border-radius: 20px;
+    padding: 20px 50px;
+    margin: 10px;
+}
+
+.sidebar {
+    grid-area: sidebar;
+    background-color: #cbe691;
+    border-radius: 20px;
+    padding: 0 0 10px;
+    margin: 10px;
+}
+
+.main {
+    grid-area: main;
+    background-color: white;
+    padding: 20px;
+    margin: 10px;
+}
+
+.footer {
+    grid-area: footer;
+    background-color: white;
+    padding: 20px;
+    margin: 10px;
+    align-items: center;
+}
+
+
+/*Header*/
+.header nav {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.header h1 {
+    flex: 1;
+    height: 100%;
+    text-align: center;
+}
+
+.right-buttons {
+    display: flex;
+    margin-left: auto;
+    gap: 20px;
+}
+
+.header button {
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header button:hover {
+    background: #333;
+    color: white;
+}
+
+.header button i {
+    font-size: 24px;
+    transition: transform 0.2s ease;
+}
+
+.header button:hover i {
+    transform: scale(1.2);
+}
