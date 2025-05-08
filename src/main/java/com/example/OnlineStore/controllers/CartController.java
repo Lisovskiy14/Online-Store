@@ -1,5 +1,6 @@
 package com.example.OnlineStore.controllers;
 
+import com.example.OnlineStore.models.Product;
 import com.example.OnlineStore.services.CartService;
 import com.example.OnlineStore.services.ProductService;
 import com.example.OnlineStore.services.UserService;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.util.List;
 
 
 @Controller
@@ -48,9 +51,11 @@ public class CartController {
 
     @GetMapping("/get")
     public String getCartPage(HttpServletRequest request, Model model) {
-        model.addAttribute("products",
-                cartService.getCartProducts(userService.getUserByUsername(
-                        request.getRemoteUser())));
+        List<Product> products = cartService.getCartProducts(
+                userService.getUserByUsername(request.getRemoteUser()));
+        model.addAttribute("products", products);
+        model.addAttribute("total_price", cartService.getTotalPrice(products));
+
         return "cart-page";
     }
 

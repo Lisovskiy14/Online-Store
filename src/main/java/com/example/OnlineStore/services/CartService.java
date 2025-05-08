@@ -47,4 +47,14 @@ public class CartService {
         cart.getProducts().removeIf(product -> product.getId().equals(product_id));
         cartRepository.save(cart);
     }
+
+    public Double getTotalPrice(List<Product> products) {
+        return products.stream().mapToDouble(Product::getPrice).sum();
+    }
+
+    public void clearCart(User user) {
+        Cart cart = cartRepository.getCartByOwner(user);
+        cart.getProducts().clear();
+        cartRepository.save(cart);
+    }
 }
