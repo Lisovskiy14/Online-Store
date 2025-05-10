@@ -2,7 +2,9 @@
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/popup.css}">
     <link rel="stylesheet" th:href="@{/css/main.css}">
+
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <meta charset="UTF-8">
     <title>Інтернет магазин</title>
@@ -10,6 +12,17 @@
 <body>
 
 <div class="container">
+
+    <!-- Спливаюче вікно -->
+    <div th:if="${message}" th:class="${'popup ' + (messageType == 'success' ? 'show success' : 'show error')}">
+        <div class="popup-content">
+            <p th:text="${message}"></p>
+            <form th:action="@{#}" method="get">
+                <button type="submit" class="close-popup">&times;</button>
+            </form>
+        </div>
+    </div>
+
 
     <header class="header">
         <nav class="nav">
@@ -53,10 +66,23 @@
             <a th:href="@{/catalog/category/{slug}(slug=${category.slug})}"
                th:text="${category.name}">Назва категорії</a>
         </div>
+
+        <div class="add_category" sec:authorize="hasRole('ROLE_ADMIN')">
+            <form th:action="'/catalog/create-category/form'" method="get">
+                <button type="submit">Додати категорію</button>
+            </form>
+        </div>
     </div>
 
     <div class="main">
         <h3>Наші товари</h3>
+
+        <div class="add_product" sec:authorize="hasRole('ROLE_SELLER')">
+            <form th:action="'/product/create'" method="get">
+                <button type="submit">Додати публікацію</button>
+            </form>
+        </div>
+
         <div class="products-grid">
             <div th:each="product : ${products}" class="product-card">
                 <a th:href="@{/product/{id}(id=${product.id})}" class="product-link">
@@ -81,58 +107,10 @@
     </div>
 
     <div class="footer">
-        <div sec:authorize="hasRole('ROLE_SELLER')">
-            <h3>Створення публікації</h3>
-            <form th:action="'/create-product'" method="post" enctype="multipart/form-data">
 
-                <label for="name">Назва продукту:</label>
-                <input type="text" id="name" name="name"/><br><br>
-
-                <label for="description">Опис:</label>
-                <input type="text" id="description" name="description"/><br><br>
-
-                <label for="category">Категорія:</label>
-                <select id="category" name="category" required>
-                    <option value="">Виберіть категорію</option>
-                    <option th:each="category : ${categories}"
-                            th:value="${category.id}"
-                            th:text="${category.name}">
-                    </option>
-                </select><br><br>
-
-                <label for="image">Завантажити зображення:</label>
-                <input type="file" id="image" name="image"/><br><br>
-
-                <label for="price">Ціна (за 1 шт.):</label>
-                <input type="number" id="price" name="price"/><br><br>
-
-                <label for="number">Кількість:</label>
-                <input type="number" id="number" name="number"/><br><br>
-
-                <input type="submit" value="Опублікувати">
-            </form>
-        </div>
     </div>
 
 </div>
-
-<main>
-
-</main>
-
-
-
-<!--<h3>Створення категорії</h3>-->
-<!--<form th:action="'/create-category'" method="post">-->
-
-<!--    <label for="name">Назва категорії</label>-->
-<!--    <input type="text" id="name" name="name"/><br><br>-->
-
-<!--    <label for="slug">Slug категорії</label>-->
-<!--    <input type="text" id="slug" name="slug"/><br><br>-->
-
-<!--    <input type="submit" value="Створити">-->
-<!--</form>-->
 
 </body>
 </html>

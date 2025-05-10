@@ -181,12 +181,21 @@
 .product-info {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     padding: 15px;
 }
 
 .product-name {
-    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+
+    flex: 1;
+    min-width: 0;
+
+    margin: 0 10px 0 0;
     font-size: 1.1em;
     color: #333;
 }
@@ -195,6 +204,7 @@
     font-size: 1.2em;
     color: #0d77bd;
     font-weight: bold;
+    white-space: nowrap;
 }
 
 .add-to-cart-form {

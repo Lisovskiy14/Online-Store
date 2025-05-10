@@ -5,9 +5,7 @@ import com.example.OnlineStore.services.CategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/catalog")
@@ -22,5 +20,17 @@ public class CatalogController {
         model.addAttribute("products", category.getProducts());
 
         return "main-page";
+    }
+
+    @GetMapping("/create-category/form")
+    public String getCreateCategoryPage() {
+        return "create-category-page";
+    }
+
+    @PostMapping("/create-category")
+    public String createCategory(@ModelAttribute Category category) {
+        categoryService.addCategory(category);
+
+        return "redirect:/";
     }
 }

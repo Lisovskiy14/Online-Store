@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" th:href="@{/css/order.css}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <title>Створення замовлення - Інтернет магазин</title>
+
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <nav class="nav">
+            <form th:action="'/'" method="get">
+                <button type="submit" class="home-button">
+                    <i class='bx bxs-home'></i>
+                </button>
+            </form>
+
+            <h1>Інтернет-магазин різноманітних товарів</h1>
+
+            <div class="right-buttons">
+                <form th:action="'/cart/get'" method="get">
+                    <button type="submit" class="cart-button">
+                        <i class='bx bxs-cart'></i>
+                    </button>
+                </form>
+
+                <form th:action="'/account'" method="get">
+                    <button type="submit" class="account-button">
+                        <i class='bx bxs-user'></i>
+                    </button>
+                </form>
+
+                <form th:action="'/logout'" method="post">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    <button type="submit" class="account-button">
+                        <i class='bx bx-log-out' ></i>
+                    </button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <h1>Для підтвердження замовлення вам необхідно ввести додаткові дані</h1>
+
+        <form class="additional-info-form" th:action="@{/order/confirm-new-data}" method="post">
+            <div class="input-box">
+                <input type="text" placeholder="Ім'я" name="firstName" required>
+            </div>
+
+            <div class="input-box">
+                <input type="text" placeholder="Прізвище" name="lastName" required>
+            </div>
+
+            <div class="input-box">
+                <input type="number" placeholder="Номер телефону" name="phoneNumber" required>
+            </div>
+
+            <div class="input-box">
+                <input type="text" placeholder="Адреса доставки" name="address" required>
+            </div>
+
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+            <button type="submit" class="btn">Підтвердити замовлення</button>
+        </form>
+    </main>
+</div>
+
+</body>
+</html>

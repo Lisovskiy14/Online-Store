@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @ToString(exclude = "category")
 @EqualsAndHashCode(exclude = "category")
@@ -34,4 +37,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "seller_id")
     private User seller;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 }

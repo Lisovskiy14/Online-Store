@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" th:href="@{/css/order.css}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <title>Підтвердіть дані - Інтернет магазин</title>
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <nav class="nav">
+            <form th:action="'/'" method="get">
+                <button type="submit" class="home-button">
+                    <i class='bx bxs-home'></i>
+                </button>
+            </form>
+
+            <h1>Інтернет-магазин різноманітних товарів</h1>
+
+            <div class="right-buttons">
+                <form th:action="'/cart/get'" method="get">
+                    <button type="submit" class="cart-button">
+                        <i class='bx bxs-cart'></i>
+                    </button>
+                </form>
+
+                <form th:action="'/account'" method="get">
+                    <button type="submit" class="account-button">
+                        <i class='bx bxs-user'></i>
+                    </button>
+                </form>
+
+                <form th:action="'/logout'" method="post">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    <button type="submit" class="account-button">
+                        <i class='bx bx-log-out' ></i>
+                    </button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <h1>Перевірте ваші дані, необхідні для створення замовлення</h1>
+
+        <p>Ім'я: <span th:text="${user.firstName}"></span></p>
+        <p>Прізвище: <span th:text="${user.lastName}"></span></p>
+        <p>Номер телефону: <span th:text="${user.phoneNumber}"></span></p>
+        <p>Адреса доставки: <span th:text="${user.address}"></span></p>
+
+        <form class="change-data-form" th:action="@{/order/form}" method="get">
+            <button type="submit">Змінити дані</button>
+        </form>
+
+        <form class="create-order-form" th:action="@{/order/create}" method="post">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+            <button type="submit">Підтвердити замовлення</button>
+        </form>
+    </main>
+</div>
+
+</body>
+</html>

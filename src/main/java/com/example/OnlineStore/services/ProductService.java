@@ -4,6 +4,8 @@ import com.example.OnlineStore.models.Product;
 import com.example.OnlineStore.models.User;
 import com.example.OnlineStore.repositories.CategoryRepository;
 import com.example.OnlineStore.repositories.ProductRepository;
+import com.example.OnlineStore.repositories.ReviewRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,12 +30,16 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public void deleteProduct(Product product) {
-        productRepository.delete(product);
+    public void deleteProduct(Long product_id) {
+        productRepository.deleteById(product_id);
     }
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();
+    }
+
+    public List<Product> getProductsBySeller(User seller) {
+        return productRepository.getProductsBySeller(seller);
     }
 
     public String uploadImage(MultipartFile file) {
@@ -52,5 +58,16 @@ public class ProductService {
         }
 
         throw new NullPointerException("Зображення не було завантажено користувачем!");
+    }
+
+    @Transactional
+    public void sellProduct(Product product) {
+        User seller = product.getSeller();
+        product.setNumber(product.getNumber() - 1);
+        seller.setMoneyEarned(seller.getMoneyEarned() + product.getPrice());
+
+        if (product.getNumber() <= 0) {
+            productRepository.delete(product);
+        }
     }
 }

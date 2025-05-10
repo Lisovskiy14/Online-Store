@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" th:href="@{/css/order.css}">
+    <link rel="stylesheet" th:href="@{/css/create-category.css}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <meta charset="UTF-8">
-    <title>Створення замовлення - Інтернет магазин</title>
-
+    <title>Створення категорії - Інтернет магазин</title>
 </head>
 <body>
 
@@ -44,28 +43,16 @@
     </header>
 
     <main class="main">
-        <h1>Введіть необхідні дані</h1>
+        <h1>Створення категорії</h1>
+        <form th:action="'/catalog/create-category'" method="post">
 
-        <form class="additional-info-form" th:action="@{/order/confirm}" method="post">
-            <div class="input-box">
-                <input type="text" placeholder="Ім'я" name="firstName" required>
-            </div>
+            <label for="name">Назва категорії</label>
+            <input type="text" id="name" name="name"/><br><br>
 
-            <div class="input-box">
-                <input type="text" placeholder="Прізвище" name="lastName" required>
-            </div>
+            <label for="slug">Slug категорії</label>
+            <input type="text" id="slug" name="slug"/><br><br>
 
-            <div class="input-box">
-                <input type="number" placeholder="Номер телефону" name="phoneNumber" required>
-            </div>
-
-            <div class="input-box">
-                <input type="text" placeholder="Адреса доставки" name="address" required>
-            </div>
-
-            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-
-            <button type="submit" class="btn">Підтвердити замовлення</button>
+            <input type="submit" value="Створити">
         </form>
     </main>
 </div>

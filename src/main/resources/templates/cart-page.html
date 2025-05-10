@@ -74,11 +74,11 @@
         </div>
 
         <div class="price-order-button-container" th:if="${products.size() > 0}">
-            <p class="total-price" th:text="${#numbers
+            <p class="total-price" th:text="'Загальна вартість: ' + ${#numbers
                             .formatInteger(total_price, 0, 'POINT')
                             ?.replace('.', ' ')} + ' ₴'"></p>
 
-            <form class="create-order-form" th:action="@{/order/form}" method="get">
+            <form class="create-order-form" th:action="@{/order/confirm-data}" method="get">
                 <button type="submit">
                     Замовити
                 </button>

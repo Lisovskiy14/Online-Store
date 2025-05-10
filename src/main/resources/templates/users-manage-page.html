@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" th:href="@{/css/user-manage.css}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <title>Управління користувачами - Інтернет магазин</title>
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <nav class="nav">
+            <form th:action="'/'" method="get">
+                <button type="submit" class="home-button">
+                    <i class='bx bxs-home'></i>
+                </button>
+            </form>
+
+            <h1>Інтернет-магазин різноманітних товарів</h1>
+
+            <div class="right-buttons">
+                <form th:action="'/cart/get'" method="get">
+                    <button type="submit" class="cart-button">
+                        <i class='bx bxs-cart'></i>
+                    </button>
+                </form>
+
+                <form th:action="'/account'" method="get">
+                    <button type="submit" class="account-button">
+                        <i class='bx bxs-user'></i>
+                    </button>
+                </form>
+
+                <form th:action="'/logout'" method="post">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    <button type="submit" class="account-button">
+                        <i class='bx bx-log-out' ></i>
+                    </button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <h1>Список користувачів</h1>
+
+        <div class="users-grid">
+            <div class="user-card" th:each="user : ${users}">
+                <h1 th:text="${user.username}"></h1>
+
+                <p>Ім'я: <span th:text="${user.firstName}"></span></p>
+                <p>Прізвище: <span th:text="${user.lastName}"></span></p>
+                <p>Номер телефону: <span th:text="${user.phoneNumber}"></span></p>
+                <p>Адреса доставки: <span th:text="${user.address}"></span></p>
+                <p>Продано товарів на суму: <span th:text="${#numbers
+                     .formatInteger(user.moneyEarned, 0, 'POINT')
+                     ?.replace('.', ' ')} + ' ₴'"></span></p>
+                <p>Ролі: <span th:text="${user.getRoles()}"></span></p>
+
+                <div class="buttons-block">
+                    <form th:if="${!user.getRoles().contains(T(com.example.OnlineStore.models.enums.Role).ROLE_SELLER)}"
+                          th:action="@{/admin/add-role}" method="post">
+                        <input type="hidden" name="username" th:value="${user.username}" />
+                        <input type="hidden" name="role" th:value="${T(com.example.OnlineStore.models.enums.Role).ROLE_SELLER}" />
+                        <button type="submit">Додати роль SELLER</button>
+                    </form>
+
+                    <form th:if="${user.getRoles().contains(T(com.example.OnlineStore.models.enums.Role).ROLE_SELLER)}"
+                          th:action="@{/admin/delete-role}" method="post">
+                        <input type="hidden" name="username" th:value="${user.username}" />
+                        <input type="hidden" name="role" th:value="${T(com.example.OnlineStore.models.enums.Role).ROLE_SELLER}" />
+                        <button type="submit">Видалити роль SELLER</button>
+                    </form>
+
+
+
+                    <form th:if="${!user.getRoles().contains(T(com.example.OnlineStore.models.enums.Role).ROLE_ADMIN)}"
+                          th:action="@{/admin/add-role}" method="post">
+                        <input type="hidden" name="username" th:value="${user.username}" />
+                        <input type="hidden" name="role" th:value="${T(com.example.OnlineStore.models.enums.Role).ROLE_ADMIN}" />
+                        <button type="submit">Додати роль ADMIN</button>
+                    </form>
+
+                    <form th:if="${user.getRoles().contains(T(com.example.OnlineStore.models.enums.Role).ROLE_ADMIN)}"
+                          th:action="@{/admin/delete-role}" method="post">
+                        <input type="hidden" name="username" th:value="${user.username}" />
+                        <input type="hidden" name="role" th:value="${T(com.example.OnlineStore.models.enums.Role).ROLE_ADMIN}" />
+                        <button type="submit">Видалити роль ADMIN</button>
+                    </form>
+
+                    <form th:action="@{/admin/delete-user}" method="post">
+                        <input type="hidden" name="username" th:value="${user.username}" />
+                        <button type="submit">Видалити користувача</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+</div>
+
+</body>
+</html>

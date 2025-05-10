@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
@@ -29,14 +30,17 @@ public class CartController {
     @PostMapping("/add")
     public String addToCart(HttpServletRequest request,
                             @RequestParam("product_id") Long product_id,
-                            Model model) {
+                            RedirectAttributes redirectAttributes) {
 
         try {
             cartService.addProduct(userService.getUserByUsername(request.getRemoteUser()),
                     productService.getProductById(product_id));
+            redirectAttributes.addFlashAttribute("messageType", "success");
+            redirectAttributes.addFlashAttribute("message", "Товар додано в кошик");
         } catch (RuntimeException e) {
             System.out.println(e.getClass() + ": " + e.getMessage());
-            model.addAttribute("errorMessage", e.getMessage());
+            redirectAttributes.addFlashAttribute("messageType", "error");
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
 
 

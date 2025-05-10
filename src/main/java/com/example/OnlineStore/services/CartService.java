@@ -27,7 +27,7 @@ public class CartService {
             cart = cartRepository.getCartByOwner(customer);
         }
         if (cart.getProducts().contains(product)) {
-            throw new RuntimeException("Даний продукт уже є в кошику");
+            throw new RuntimeException("Даний товар уже є в кошику");
         }
         cart.getProducts().add(product);
         cartRepository.save(cart);

@@ -27,6 +27,7 @@ public class User implements UserDetails {
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "roles", columnDefinition = "VARCHAR(255)")
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
@@ -41,6 +42,8 @@ public class User implements UserDetails {
 
     @Column(length = 100)
     private String address;
+
+    private double moneyEarned;
 
 
     @Override

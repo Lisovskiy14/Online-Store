@@ -1,13 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" th:href="@{/css/popup.css}">
     <link rel="stylesheet" th:href="@{/css/product.css}">
     <meta charset="UTF-8">
     <title th:text="${product.name} + ' - Інтернет магазин'"></title>
 </head>
 <body>
 <div class="container">
+
+    <!-- Спливаюче вікно -->
+    <div th:if="${message}" th:class="${'popup ' + (messageType == 'success' ? 'show success' : 'show error')}">
+        <div class="popup-content">
+            <p th:text="${message}"></p>
+            <form th:action="@{#}" method="get">
+                <button type="submit" class="close-popup">&times;</button>
+            </form>
+        </div>
+    </div>
+
     <header class="header">
         <nav class="nav">
             <form th:action="'/'" method="get">
@@ -19,7 +31,7 @@
             <h1>Інтернет-магазин різноманітних товарів</h1>
 
             <div class="right-buttons">
-                <form th:action="'/cart'" method="get">
+                <form th:action="'/cart/get'" method="get">
                     <button type="submit" class="cart-button">
                         <i class='bx bxs-cart'></i>
                     </button>
@@ -43,7 +55,7 @@
 
     <div class="sidebar">
         <img th:src="${product.imageUrl}" th:alt="${product.name}"/>
-        <a th:href="@{/seller/{username}(username=${product.seller.username})}"
+        <a th:href="@{/account/{username}(username=${product.seller.username})}"
            id="seller" th:text="'Продавець - ' + ${product.seller.username}"></a>
     </div>
 
@@ -81,6 +93,22 @@
 
     <footer class="footer">
         <h1>Відгуки</h1>
+
+        <form class="create-review-form" th:action="@{/review/create}" method="post">
+            <input type="text" placeholder="Написати відгук" name="review_text" required>
+            <input type="hidden" name="product_id" th:value="${product.id}" />
+            <button type="submit">Додати відгук</button>
+        </form>
+
+        <div class="review" th:each="review : ${product.reviews}">
+            <p class="author" th:text="${review.getAuthor().username}"></p>
+            <p class="text" th:text="${review.text}"></p>
+            <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/admin/delete-review}" method="post">
+                <input type="hidden" name="review_id" th:value="${review.id}" />
+                <input type="hidden" name="product_id" th:value="${product.id}" />
+                <button type="submit">Видалити відгук</button>
+            </form>
+        </div>
     </footer>
 </div>
 
