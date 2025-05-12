@@ -34,12 +34,22 @@ public class UserController {
 
     @PostMapping("/registration")
     public String registration(User user, @RequestParam(defaultValue = "false") boolean isSeller, Model model) {
-        if (userService.createUser(user, isSeller)) {
+
+        try {
+            userService.createUser(user, isSeller);
             cartService.createCart(user);
             return "redirect:/login";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "registration-page";
         }
-        model.addAttribute("errorMessage", String.format("Користувач з логіном %s вже існує!", user.getUsername()));
-        System.out.println("User with username: " + user.getUsername() + " already exists");
-        return "registration-page";
+
+//        if (userService.createUser(user, isSeller)) {
+//            cartService.createCart(user);
+//            return "redirect:/login";
+//        }
+//        model.addAttribute("errorMessage", String.format("Користувач з логіном %s вже існує!", user.getUsername()));
+//        System.out.println("User with username: " + user.getUsername() + " already exists");
+//        return "registration-page";
     }
 }

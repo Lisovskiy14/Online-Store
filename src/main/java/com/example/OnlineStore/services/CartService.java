@@ -57,4 +57,8 @@ public class CartService {
         cart.getProducts().clear();
         cartRepository.save(cart);
     }
+
+    public void deleteCart(User user) {
+        cartRepository.deleteByOwner(user);
+    }
 }

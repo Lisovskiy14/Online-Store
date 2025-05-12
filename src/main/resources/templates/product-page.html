@@ -63,7 +63,8 @@
         <div class="title">
             <h1 th:text="${product.name}"></h1>
             <div class="category" >
-                <p th:text="${product.category.name}"></p>
+                <p th:if="${product.category != null}" th:text="${product.category.name}"></p>
+                <p th:if="${product.category == null}">Без категорії</p>
             </div>
         </div>
 

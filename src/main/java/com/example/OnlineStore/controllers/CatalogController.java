@@ -21,16 +21,4 @@ public class CatalogController {
 
         return "main-page";
     }
-
-    @GetMapping("/create-category/form")
-    public String getCreateCategoryPage() {
-        return "create-category-page";
-    }
-
-    @PostMapping("/create-category")
-    public String createCategory(@ModelAttribute Category category) {
-        categoryService.addCategory(category);
-
-        return "redirect:/";
-    }
 }

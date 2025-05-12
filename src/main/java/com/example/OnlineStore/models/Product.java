@@ -24,7 +24,7 @@ public class Product {
     private String imageUrl;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = true)
     private Category category;
 
     @Column(length = 1000)
@@ -32,7 +32,7 @@ public class Product {
 
     private int number;
 
-    private double price;
+    private Double price;
 
     @ManyToOne
     @JoinColumn(name = "seller_id")

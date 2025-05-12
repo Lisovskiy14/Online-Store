@@ -55,4 +55,30 @@ public class ProductController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/edit")
+    public String editProductPage(@RequestParam("product_id") Long product_id, Model model) {
+        model.addAttribute("categories", categoryService.getRootCategories());
+        model.addAttribute("product_id", product_id);
+        return "edit-product-page";
+    }
+
+    @PostMapping("/edit")
+    public String editProduct(@ModelAttribute Product product,
+                              @RequestParam(value = "image", required = false) MultipartFile image,
+                              @RequestParam(value = "product_id") Long product_id) {
+
+        if (image != null && !image.isEmpty()) {
+            try {
+                product.setImageUrl(productService.uploadImage(image));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        Product editedProduct = productService.getProductById(product_id);
+        productService.updateProduct(editedProduct, product);
+
+        return "redirect:/account";
+    }
 }

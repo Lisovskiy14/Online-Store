@@ -225,6 +225,7 @@
 }
 
 .add-to-cart-button i {
+    font-size: 20px;
     transition: transform 0.2s ease;
 }
 

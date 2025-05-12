@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,5 +33,6 @@ public class Category {
     private List<Category> subcategories = new ArrayList<>();
 
     @OneToMany(mappedBy = "category")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private List<Product> products = new ArrayList<>();
 }

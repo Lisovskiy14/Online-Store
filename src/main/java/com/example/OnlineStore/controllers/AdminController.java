@@ -3,10 +3,7 @@ package com.example.OnlineStore.controllers;
 import com.example.OnlineStore.models.Category;
 import com.example.OnlineStore.models.User;
 import com.example.OnlineStore.models.enums.Role;
-import com.example.OnlineStore.services.CategoryService;
-import com.example.OnlineStore.services.OrderService;
-import com.example.OnlineStore.services.ReviewService;
-import com.example.OnlineStore.services.UserService;
+import com.example.OnlineStore.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -23,17 +20,28 @@ public class AdminController {
     private final UserService userService;
     private final ReviewService reviewService;
     private final OrderService orderService;
+    private final CartService cartService;
 
-    @GetMapping("/create-category/form")
-    public String getCreateCategoryPage() {
-        return "create-category-page";
+    @GetMapping("/manage-categories")
+    public String getCreateCategoryPage(Model model) {
+        model.addAttribute("categories", categoryService.getRootCategories());
+
+        return "manage-categories-page";
     }
 
     @PostMapping("/create-category")
     public String createCategory(@ModelAttribute Category category) {
         categoryService.addCategory(category);
 
-        return "redirect:/";
+        return "redirect:/admin/manage-categories";
+    }
+
+    @PostMapping("/delete-category")
+    public String deleteCategory(@RequestParam("category_id") Long category_id) {
+        System.out.println("метод спрацював");
+        categoryService.deleteCategory(category_id);
+        System.out.println("категорія повинна була видалитись");
+        return "redirect:/admin/manage-categories";
     }
 
     @GetMapping("/show-users")
@@ -57,7 +65,10 @@ public class AdminController {
     }
 
     @PostMapping("/delete-user")
+    @Transactional
     public String deleteUser(@RequestParam("username") String username) {
+        User user = userService.getUserByUsername(username);
+        cartService.deleteCart(user);
         userService.deleteUser(username);
         return "redirect:/admin/show-users";
     }

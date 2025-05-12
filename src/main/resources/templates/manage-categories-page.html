@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" th:href="@{/css/create-category.css}">
+    <link rel="stylesheet" th:href="@{/css/manage-categories.css}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <meta charset="UTF-8">
     <title>Створення категорії - Інтернет магазин</title>
@@ -43,17 +43,28 @@
     </header>
 
     <main class="main">
-        <h1>Створення категорії</h1>
-        <form th:action="'/catalog/create-category'" method="post">
+        <div class="create-category-block">
+            <h1>Створення категорії</h1>
+            <form th:action="'/admin/create-category'" method="post">
 
-            <label for="name">Назва категорії</label>
-            <input type="text" id="name" name="name"/><br><br>
+                <label for="name">Назва категорії</label>
+                <input type="text" id="name" name="name"/><br><br>
 
-            <label for="slug">Slug категорії</label>
-            <input type="text" id="slug" name="slug"/><br><br>
+                <label for="slug">Slug категорії</label>
+                <input type="text" id="slug" name="slug"/><br><br>
 
-            <input type="submit" value="Створити">
-        </form>
+                <input type="submit" value="Створити">
+            </form>
+        </div>
+
+        <div class="category-block" th:each="category : ${categories}">
+            <p th:text="'Назва: ' + ${category.name}"></p>
+            <p th:text="'slug: ' + ${category.slug}"></p>
+            <form th:action="'/admin/delete-category'" method="post">
+                <input type="hidden" name="category_id" th:value="${category.id}"/>
+                <button type="submit">Видалити</button>
+            </form>
+        </div>
     </main>
 </div>
 

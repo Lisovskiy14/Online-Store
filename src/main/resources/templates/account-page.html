@@ -64,8 +64,13 @@
                 <div class="manage-panel" sec:authorize="hasRole('ROLE_ADMIN')">
                     <h1>Панель управління</h1>
                     <form th:action="@{/admin/show-users}" method="get">
-                        <button type="submit">Переглянути усіх користувачів</button>
+                        <button type="submit">Користувачі</button>
                     </form>
+                    <div class="add_category" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <form th:action="'/admin/manage-categories'" method="get">
+                            <button type="submit">Категорії</button>
+                        </form>
+                    </div>
                 </div>
 
 
@@ -87,7 +92,8 @@
                                         .formatInteger(product.price, 0, 'POINT')
                                         ?.replace('.', ' ')} + ' ₴'"></h4>
                                     <h4 class="product-name" th:text="${product.name}"></h4>
-                                    <h4 class="product-category" th:text="${product.category.name}"></h4>
+                                    <h4 class="product-category" th:if="${product.category != null}" th:text="${product.category.name}"></h4>
+                                    <h4 class="product-category" th:if="${product.category == null}">Без категорії</h4>
                                 </div>
                                 <p class="product-description"
                                    th:text="${product.description}">
@@ -123,7 +129,8 @@
                                         .formatInteger(product.price, 0, 'POINT')
                                         ?.replace('.', ' ')} + ' ₴'"></h4>
                                     <h4 class="product-name" th:text="${product.name}"></h4>
-                                    <h4 class="product-category" th:text="${product.category.name}"></h4>
+                                    <h4 class="product-category" th:if="${product.category != null}" th:text="${product.category.name}"></h4>
+                                    <h4 class="product-category" th:if="${product.category == null}">Без категорії</h4>
                                 </div>
                                 <p class="product-description"
                                    th:text="${product.description}">
@@ -164,7 +171,8 @@
                             .formatInteger(product.price, 0, 'POINT')
                             ?.replace('.', ' ')} + ' ₴'"></h4>
                                     <h4 class="product-name" th:text="${product.name}"></h4>
-                                    <h4 class="product-category" th:text="${product.category.name}"></h4>
+                                    <h4 class="product-category" th:if="${product.category != null}" th:text="${product.category.name}"></h4>
+                                    <h4 class="product-category" th:if="${product.category == null}">Без категорії</h4>
                                 </div>
                                 <p class="product-description"
                                    th:text="${product.description}">
@@ -172,12 +180,15 @@
                             </div>
                         </a>
 
-                        <div th:if="${!wrongClient}">
-                            <form class="delete-product-form" th:action="@{/product/delete}" method="post">
-                                <input type="hidden" name="product_id" th:value="${product.id}" />
-                                <button type="submit">Видалити публікацію</button>
-                            </form>
-                        </div>
+                        <form class="edit-product-form" th:action="@{/product/edit}" method="get">
+                            <input type="hidden" name="product_id" th:value="${product.id}" />
+                            <button type="submit">Редагувати публікацію</button>
+                        </form>
+
+                        <form class="delete-product-form" th:action="@{/product/delete}" method="post">
+                            <input type="hidden" name="product_id" th:value="${product.id}" />
+                            <button type="submit">Видалити публікацію</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -207,7 +218,8 @@
                             .formatInteger(product.price, 0, 'POINT')
                             ?.replace('.', ' ')} + ' ₴'"></h4>
                                 <h4 class="product-name" th:text="${product.name}"></h4>
-                                <h4 class="product-category" th:text="${product.category.name}"></h4>
+                                <h4 class="product-category" th:if="${product.category != null}" th:text="${product.category.name}"></h4>
+                                <h4 class="product-category" th:if="${product.category == null}">Без категорії</h4>
                             </div>
                             <p class="product-description"
                                th:text="${product.description}">

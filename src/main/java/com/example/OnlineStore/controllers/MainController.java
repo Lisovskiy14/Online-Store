@@ -1,20 +1,15 @@
 package com.example.OnlineStore.controllers;
 
-import com.example.OnlineStore.models.Category;
 import com.example.OnlineStore.models.Product;
 import com.example.OnlineStore.services.CategoryService;
 import com.example.OnlineStore.services.ProductService;
-import com.example.OnlineStore.services.UserService;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -26,6 +21,14 @@ public class MainController {
     public String mainPage(Model model) {
         model.addAttribute("categories", categoryService.getRootCategories());
         model.addAttribute("products", productService.getAllProducts());
+        return "main-page";
+    }
+
+    @GetMapping("/search")
+    public String searchProducts(@RequestParam(required = false) String keyword, Model model) {
+        List<Product> products = productService.searchProducts(keyword);
+        model.addAttribute("products", products);
+        model.addAttribute("categories", categoryService.getRootCategories());
         return "main-page";
     }
 }

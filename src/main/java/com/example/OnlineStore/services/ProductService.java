@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -69,5 +73,45 @@ public class ProductService {
         if (product.getNumber() <= 0) {
             productRepository.delete(product);
         }
+
+        try {
+            Path relativePath = Paths.get(product.getImageUrl());
+            String fileName = relativePath.getFileName().toString();
+            Path path = Paths.get(ABSOLUTE_IMAGE_PATH + fileName);
+            Files.delete(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Product> searchProducts(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return productRepository.findAll();
+        }
+        return productRepository.searchProducts(keyword);
+    }
+
+    public void updateProduct(Product editedProduct, Product product) {
+        if (product.getName() != null && !product.getName().trim().isEmpty()) {
+            editedProduct.setName(product.getName().trim());
+        }
+
+        if (product.getDescription() != null && !product.getDescription().trim().isEmpty()) {
+            editedProduct.setDescription(product.getDescription().trim());
+        }
+
+        if (product.getPrice() != null && product.getPrice() > 0) {
+            editedProduct.setPrice(product.getPrice());
+        }
+
+        if (product.getCategory() != null) {
+            editedProduct.setCategory(product.getCategory());
+        }
+
+        if (product.getImageUrl() != null && !product.getImageUrl().trim().isEmpty()) {
+            editedProduct.setImageUrl(product.getImageUrl().trim());
+        }
+
+        productRepository.save(editedProduct);
     }
 }

@@ -1,12 +1,11 @@
 package com.example.OnlineStore.services;
 
+import com.example.OnlineStore.models.handlers.UsernamePasswordHandler;
 import com.example.OnlineStore.models.User;
 import com.example.OnlineStore.models.enums.Role;
 import com.example.OnlineStore.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +18,21 @@ import java.util.Set;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UsernamePasswordHandler usernamePasswordHandler;
 
-    public boolean createUser(User user, boolean isSeller) {
+    public void createUser(User user, boolean isSeller) {
         String username = user.getUsername();
         if (userRepository.findByUsername(username) != null) {
-            return false;
+            throw new RuntimeException("Користувач з таким логіном уже існує!");
         }
 
         System.out.println("Creating user with username: " + username);
+        try {
+            usernamePasswordHandler.isPasswordValid(user.getPassword());
+            usernamePasswordHandler.isUsernameValid(username);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.getRoles().add(Role.ROLE_USER);
         if (isSeller) {
@@ -35,8 +41,6 @@ public class UserService {
         userRepository.save(user);
 
         System.out.println("User created with username: " + username);
-
-        return true;
     }
 
     public User getUserByUsername(String username) {
