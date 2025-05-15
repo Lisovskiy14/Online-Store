@@ -42,24 +42,25 @@
         </nav>
     </header>
 
-    <main class="main">
+    <div class="sidebar">
         <div class="create-category-block">
             <h1>Створення категорії</h1>
             <form th:action="'/admin/create-category'" method="post">
 
-                <label for="name">Назва категорії</label>
-                <input type="text" id="name" name="name"/><br><br>
+                <input type="text" id="name" placeholder="Назва" name="name"/>
 
-                <label for="slug">Slug категорії</label>
-                <input type="text" id="slug" name="slug"/><br><br>
+                <input type="text" id="slug" placeholder="slug" name="slug"/>
 
-                <input type="submit" value="Створити">
+                <button type="submit">Створити</button>
             </form>
         </div>
+    </div>
 
+    <main class="main">
+        <h1 class="top-h">Список категорій</h1>
         <div class="category-block" th:each="category : ${categories}">
-            <p th:text="'Назва: ' + ${category.name}"></p>
-            <p th:text="'slug: ' + ${category.slug}"></p>
+            <p class="name" th:text="${category.name}"></p>
+            <p class="slug" th:text="'slug: ' + ${category.slug}"></p>
             <form th:action="'/admin/delete-category'" method="post">
                 <input type="hidden" name="category_id" th:value="${category.id}"/>
                 <button type="submit">Видалити</button>

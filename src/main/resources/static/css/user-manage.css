@@ -31,9 +31,7 @@
     grid-area: main;
     background-color: white;
     padding: 20px;
-    display: flex;
-    justify-content: center;
-    margin-top: 200px;
+    margin-top: 10px;
 }
 
 
@@ -87,15 +85,20 @@
 
 
 /*Main*/
-h1 {
+.top-h {
     font-size: 28px;
     text-align: center;
     margin-bottom: 20px;
 }
 
-.order-data {
-    min-width: 400px;
-    max-width: 500px;
+.users-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.user-card {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -103,20 +106,41 @@ h1 {
     border-radius: 8px;
     background: #f8f9fa;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    height: 100%;
 }
 
-.buttons {
-    margin-top: 20px;
+.user-data {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.buttons-block {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
     gap: 10px;
 }
 
-.change-data-form button {
-    width: 140px;
-    height: 40px;
+.buttons-block .role-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+}
+
+.role-buttons form {
+    width: 100%;
+}
+
+.role-buttons .add-role-form button {
+    width: 100%;
+    height: 35px;
     border: none;
-    border-radius: 20px;
+    border-radius: 10px;
     background-color: #0890cf;
     color: white;
     font-size: 14px;
@@ -125,17 +149,16 @@ h1 {
     transition: all 0.2s ease;
 }
 
-.change-data-form button:hover {
+.role-buttons .add-role-form button:hover {
     background-color: #0d77bd;
-    font-size: 15px;
 }
 
-.create-order-form button {
-    width: 230px;
-    height: 40px;
+.role-buttons .delete-role-form button {
+    width: 100%;
+    height: 35px;
     border: none;
-    border-radius: 20px;
-    background-color: #8fb53e;
+    border-radius: 10px;
+    background-color: #b8272f;
     color: white;
     font-size: 14px;
     font-weight: bold;
@@ -143,56 +166,30 @@ h1 {
     transition: all 0.2s ease;
 }
 
-.create-order-form button:hover {
-    background-color: #77992e;
-    font-size: 15px;
+.role-buttons .delete-role-form button:hover {
+    background-color: #91272d;
 }
 
 
 
-.additional-info-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.additional-info-form input {
+.buttons-block .delete-user-form {
     width: 100%;
-    padding: 12px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    background-color: white;
-    font-size: 16px;
-    color: #333;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    transition: border-color 0.3s ease;
 }
 
-.additional-info-form input:hover {
-    border-color: #999;
-}
-
-.additional-info-form input:focus {
-    outline: none;
-    border-color: #4a90e2;
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
-}
-
-.additional-info-form button {
-    padding: 14px;
-    background: #4a90e2;
-    color: white;
+.buttons-block .delete-user-form button {
+    width: 100%;
+    height: 40px;
     border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
+    border-radius: 10px;
+    background-color: #b8272f;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
-.additional-info-form button:hover {
-    background: #357abd;
-    transform: scale(1.02);
+.buttons-block .delete-user-form button:hover {
+    background-color: #91272d;
+    font-size: 15px;
 }

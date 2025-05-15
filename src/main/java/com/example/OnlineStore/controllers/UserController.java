@@ -43,13 +43,5 @@ public class UserController {
             model.addAttribute("errorMessage", e.getMessage());
             return "registration-page";
         }
-
-//        if (userService.createUser(user, isSeller)) {
-//            cartService.createCart(user);
-//            return "redirect:/login";
-//        }
-//        model.addAttribute("errorMessage", String.format("Користувач з логіном %s вже існує!", user.getUsername()));
-//        System.out.println("User with username: " + user.getUsername() + " already exists");
-//        return "registration-page";
     }
 }

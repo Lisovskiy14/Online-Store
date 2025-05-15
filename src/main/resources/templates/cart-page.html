@@ -45,6 +45,9 @@
     <main class="main">
         <h1>Ваш кошик з товарами</h1>
 
+
+
+
         <div class="products-grid">
             <div class="product-card" th:each="product : ${products}">
                 <a th:href="@{/product/{id}(id=${product.id})}" class="product-link">
@@ -54,16 +57,18 @@
                     <div class="product-info">
                         <div class="higher">
                             <h4 class="product-price" th:text="${#numbers
-                            .formatInteger(product.price, 0, 'POINT')
-                            ?.replace('.', ' ')} + ' ₴'"></h4>
+                                        .formatInteger(product.price, 0, 'POINT')
+                                        ?.replace('.', ' ')} + ' ₴'"></h4>
                             <h4 class="product-name" th:text="${product.name}"></h4>
-                            <h4 class="product-category" th:text="${product.category.name}"></h4>
+                            <h4 class="product-category" th:if="${product.category != null}" th:text="${product.category.name}"></h4>
+                            <h4 class="product-category" th:if="${product.category == null}">Без категорії</h4>
                         </div>
                         <p class="product-description"
                            th:text="${product.description}">
                         </p>
                     </div>
                 </a>
+
                 <form th:action="@{/cart/delete-product}" method="post" class="delete-from-cart-form">
                     <input type="hidden" name="product_id" th:value="${product.id}" />
                     <button type="submit">
@@ -71,19 +76,48 @@
                     </button>
                 </form>
             </div>
-        </div>
 
-        <div class="price-order-button-container" th:if="${products.size() > 0}">
-            <p class="total-price" th:text="'Загальна вартість: ' + ${#numbers
+            <div class="sum-info" th:if="${products.size() > 0}">
+                <p class="product-price" th:text="'Загальна вартість: ' + ${#numbers
                             .formatInteger(total_price, 0, 'POINT')
                             ?.replace('.', ' ')} + ' ₴'"></p>
 
-            <form class="create-order-form" th:action="@{/order/confirm-data}" method="get">
-                <button type="submit">
-                    Замовити
-                </button>
-            </form>
+                <form class="create-order-form" th:action="@{/order/confirm-data}" method="get">
+                    <button type="submit">
+                        Замовити
+                    </button>
+                </form>
+            </div>
         </div>
+<!--        <div class="products-grid">-->
+<!--            <div class="product-card" th:each="product : ${products}">-->
+<!--                <a th:href="@{/product/{id}(id=${product.id})}" class="product-link">-->
+<!--                    <div class="product-image">-->
+<!--                        <img th:src="${product.imageUrl}" th:alt="${product.name}" />-->
+<!--                    </div>-->
+<!--                    <div class="product-info">-->
+<!--                        <div class="higher">-->
+<!--                            <h4 class="product-price" th:text="${#numbers-->
+<!--                            .formatInteger(product.price, 0, 'POINT')-->
+<!--                            ?.replace('.', ' ')} + ' ₴'"></h4>-->
+<!--                            <h4 class="product-name" th:text="${product.name}"></h4>-->
+<!--                            <h4 class="product-category" th:text="${product.category.name}"></h4>-->
+<!--                        </div>-->
+<!--                        <p class="product-description"-->
+<!--                           th:text="${product.description}">-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <form th:action="@{/cart/delete-product}" method="post" class="delete-from-cart-form">-->
+<!--                    <input type="hidden" name="product_id" th:value="${product.id}" />-->
+<!--                    <button type="submit">-->
+<!--                        Скасувати-->
+<!--                    </button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
 
     </main>
 </div>

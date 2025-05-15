@@ -96,13 +96,13 @@
         <h1>Відгуки</h1>
 
         <form class="create-review-form" th:action="@{/review/create}" method="post">
-            <input type="text" placeholder="Написати відгук" name="review_text" required>
+            <textarea placeholder="Написати відгук..." name="review_text" rows="3" required></textarea>
             <input type="hidden" name="product_id" th:value="${product.id}" />
             <button type="submit">Додати відгук</button>
         </form>
 
         <div class="review" th:each="review : ${product.reviews}">
-            <p class="author" th:text="${review.getAuthor().username}"></p>
+            <p class="author" th:text="${review.getAuthor().username} + ':'"></p>
             <p class="text" th:text="${review.text}"></p>
             <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/admin/delete-review}" method="post">
                 <input type="hidden" name="review_id" th:value="${review.id}" />

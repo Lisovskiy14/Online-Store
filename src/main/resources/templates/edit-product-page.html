@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" th:href="@{/css/create-product.css}">
+  <link rel="stylesheet" th:href="@{/css/create-edit-product.css}">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <meta charset="UTF-8">
   <title>Створення публікації - Інтернет магазин</title>
@@ -43,33 +43,32 @@
   </header>
 
   <main class="main">
-    <h3>Редагування публікації</h3>
+    <h1>Редагування публікації</h1>
     <form th:action="'/product/edit'" method="post" enctype="multipart/form-data">
 
-      <label for="name">Назва продукту:</label>
-      <input type="text" id="name" name="name"/><br><br>
+      <div class="left-inputs">
+        <input type="text" placeholder="Назва продукту" id="name" name="name"/>
 
-      <label for="description">Опис:</label>
-      <input type="text" id="description" name="description"/><br><br>
+        <select id="category" name="category" required>
+          <option value="">Виберіть категорію</option>
+          <option th:each="category : ${categories}"
+                  th:value="${category.id}"
+                  th:text="${category.name}">
+          </option>
+        </select>
 
-      <label for="category">Категорія:</label>
-      <select id="category" name="category" required>
-        <option value="">Виберіть категорію</option>
-        <option th:each="category : ${categories}"
-                th:value="${category.id}"
-                th:text="${category.name}">
-        </option>
-      </select><br><br>
+        <input type="number" placeholder="Ціна" id="price" name="price"/>
 
-      <label for="image">Завантажити зображення:</label>
-      <input type="file" id="image" name="image"/><br><br>
+        <input class="image-input" type="file" id="image" name="image" required autocomplete="off"/>
+        <label for="image" class="custom-file-upload">
+          <span class="default-text">Завантажити зображення</span>
+          <span class="selected-text">Зображення обрано</span>
+        </label>
+      </div>
 
-      <label for="price">Ціна (за 1 шт.):</label>
-      <input type="number" id="price" name="price"/><br><br>
+      <textarea placeholder="Опис..." id="description" name="description" rows="5"></textarea>
 
-      <input type="hidden" name="product_id" th:value="${product_id}"/>
-
-      <input type="submit" value="Змінити">
+      <button type="submit">Підтвердити зміни</button>
     </form>
   </main>
 </div>

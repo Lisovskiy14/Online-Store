@@ -43,53 +43,58 @@
     </header>
 
     <main class="main">
-        <h1>Список користувачів</h1>
+        <h1 class="top-h">Список користувачів</h1>
 
         <div class="users-grid">
             <div class="user-card" th:each="user : ${users}">
                 <h1 th:text="${user.username}"></h1>
 
-                <p>Ім'я: <span th:text="${user.firstName}"></span></p>
-                <p>Прізвище: <span th:text="${user.lastName}"></span></p>
-                <p>Номер телефону: <span th:text="${user.phoneNumber}"></span></p>
-                <p>Адреса доставки: <span th:text="${user.address}"></span></p>
-                <p>Продано товарів на суму: <span th:text="${#numbers
+                <div class="user-data">
+                    <p>Ім'я: <span th:text="${user.firstName}"></span></p>
+                    <p>Прізвище: <span th:text="${user.lastName}"></span></p>
+                    <p>Номер телефону: <span th:text="${user.phoneNumber}"></span></p>
+                    <p>Адреса доставки: <span th:text="${user.address}"></span></p>
+                    <p>Продано товарів на суму: <span th:text="${#numbers
                      .formatInteger(user.moneyEarned, 0, 'POINT')
                      ?.replace('.', ' ')} + ' ₴'"></span></p>
-                <p>Ролі: <span th:text="${user.getRoles()}"></span></p>
+                    <p>Ролі: <span th:text="${user.getRoles()}"></span></p>
+                </div>
+
 
                 <div class="buttons-block">
-                    <form th:if="${!user.getRoles().contains(T(com.example.OnlineStore.models.enums.Role).ROLE_SELLER)}"
-                          th:action="@{/admin/add-role}" method="post">
-                        <input type="hidden" name="username" th:value="${user.username}" />
-                        <input type="hidden" name="role" th:value="${T(com.example.OnlineStore.models.enums.Role).ROLE_SELLER}" />
-                        <button type="submit">Додати роль SELLER</button>
-                    </form>
+                    <div class="role-buttons">
+                        <form th:if="${!user.getRoles().toString().contains(T(com.example.OnlineStore.models.enums.Role).ROLE_SELLER.name())}"
+                              th:action="@{/admin/add-role}" method="post" class="add-role-form">
+                            <input type="hidden" name="username" th:value="${user.username}" />
+                            <input type="hidden" name="role" th:value="${T(com.example.OnlineStore.models.enums.Role).ROLE_SELLER}" />
+                            <button type="submit">Додати роль SELLER</button>
+                        </form>
 
-                    <form th:if="${user.getRoles().contains(T(com.example.OnlineStore.models.enums.Role).ROLE_SELLER)}"
-                          th:action="@{/admin/delete-role}" method="post">
-                        <input type="hidden" name="username" th:value="${user.username}" />
-                        <input type="hidden" name="role" th:value="${T(com.example.OnlineStore.models.enums.Role).ROLE_SELLER}" />
-                        <button type="submit">Видалити роль SELLER</button>
-                    </form>
+                        <form th:if="${user.getRoles().toString().contains(T(com.example.OnlineStore.models.enums.Role).ROLE_SELLER.name())}"
+                              th:action="@{/admin/delete-role}" method="post" class="delete-role-form">
+                            <input type="hidden" name="username" th:value="${user.username}" />
+                            <input type="hidden" name="role" th:value="${T(com.example.OnlineStore.models.enums.Role).ROLE_SELLER}" />
+                            <button type="submit">Видалити роль SELLER</button>
+                        </form>
 
 
 
-                    <form th:if="${!user.getRoles().contains(T(com.example.OnlineStore.models.enums.Role).ROLE_ADMIN)}"
-                          th:action="@{/admin/add-role}" method="post">
-                        <input type="hidden" name="username" th:value="${user.username}" />
-                        <input type="hidden" name="role" th:value="${T(com.example.OnlineStore.models.enums.Role).ROLE_ADMIN}" />
-                        <button type="submit">Додати роль ADMIN</button>
-                    </form>
+                        <form th:if="${!user.getRoles().toString().contains(T(com.example.OnlineStore.models.enums.Role).ROLE_ADMIN.name())}"
+                              th:action="@{/admin/add-role}" method="post" class="add-role-form">
+                            <input type="hidden" name="username" th:value="${user.username}" />
+                            <input type="hidden" name="role" th:value="${T(com.example.OnlineStore.models.enums.Role).ROLE_ADMIN}" />
+                            <button type="submit">Додати роль ADMIN</button>
+                        </form>
 
-                    <form th:if="${user.getRoles().contains(T(com.example.OnlineStore.models.enums.Role).ROLE_ADMIN)}"
-                          th:action="@{/admin/delete-role}" method="post">
-                        <input type="hidden" name="username" th:value="${user.username}" />
-                        <input type="hidden" name="role" th:value="${T(com.example.OnlineStore.models.enums.Role).ROLE_ADMIN}" />
-                        <button type="submit">Видалити роль ADMIN</button>
-                    </form>
+                        <form th:if="${user.getRoles().toString().contains(T(com.example.OnlineStore.models.enums.Role).ROLE_ADMIN.name())}"
+                              th:action="@{/admin/delete-role}" method="post" class="delete-role-form">
+                            <input type="hidden" name="username" th:value="${user.username}" />
+                            <input type="hidden" name="role" th:value="${T(com.example.OnlineStore.models.enums.Role).ROLE_ADMIN}" />
+                            <button type="submit">Видалити роль ADMIN</button>
+                        </form>
+                    </div>
 
-                    <form th:action="@{/admin/delete-user}" method="post">
+                    <form class="delete-user-form" th:action="@{/admin/delete-user}" method="post">
                         <input type="hidden" name="username" th:value="${user.username}" />
                         <button type="submit">Видалити користувача</button>
                     </form>

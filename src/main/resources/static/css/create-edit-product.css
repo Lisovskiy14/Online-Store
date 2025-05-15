@@ -1,0 +1,292 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&family=Overpass:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "M PLUS 1p", sans-serif;
+}
+
+
+/*Структуризація*/
+.container {
+    display: grid;
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    grid-template-rows: 100px auto auto;
+    grid-template-columns: auto;
+    /*min-height: 100vh;*/
+    gap: 0;
+    padding: 10px 300px;
+}
+
+.header {
+    grid-area: header;
+    background-color: #cbe691;
+    border-radius: 20px;
+    padding: 20px 50px;
+    margin: 10px;
+}
+
+.sidebar {
+    grid-area: sidebar;
+    background-color: #cbe691;
+    border-radius: 20px;
+    padding: 0 0 10px;
+    margin: 10px;
+}
+
+.main {
+    grid-area: main;
+    background-color: white;
+    padding: 10px;
+    margin: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer {
+    grid-area: footer;
+    background-color: white;
+    padding: 20px;
+    margin: 10px;
+    align-items: center;
+}
+
+
+/*Header*/
+.header nav {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.header h1 {
+    flex: 1;
+    height: 100%;
+    text-align: center;
+}
+
+.right-buttons {
+    display: flex;
+    margin-left: auto;
+    gap: 20px;
+}
+
+.header button {
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header button:hover {
+    background: #333;
+    color: white;
+}
+
+.header button i {
+    font-size: 24px;
+    transition: transform 0.2s ease;
+}
+
+.header button:hover i {
+    transform: scale(1.2);
+}
+
+
+/*Main*/
+.main h1 {
+    font-size: 28px;
+}
+
+.main form {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    min-width: 800px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.main form .left-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.main form input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: white;
+    font-size: 16px;
+    color: #333;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: border-color 0.3s ease;
+}
+
+.main form input:hover {
+    border-color: #999;
+}
+
+.main form input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.main form .image-input {
+    display: none;
+}
+
+.main form .custom-file-upload {
+    width: 100%;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: center;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #ededed;
+    font-size: 16px;
+    color: #333;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: border-color 0.3s ease;
+}
+
+.main form .custom-file-upload:hover {
+    border-color: #999;
+}
+
+.selected-text {
+    display: none;
+}
+
+.main form .image-input:valid + .custom-file-upload {
+    background: #4a90e2;
+    color: white;
+}
+
+.image-input:valid + .custom-file-upload .selected-text {
+    display: block;
+}
+
+.image-input:valid + .custom-file-upload .default-text {
+    display: none;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: white;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+select:hover {
+    border-color: #999;
+}
+
+select:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+select option {
+    padding: 12px;
+}
+
+select option:first-child {
+    color: #666;
+}
+
+select:required:invalid {
+    color: #666;
+}
+
+.main form button {
+    padding: 14px 28px;
+    background: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-self: end;
+    margin-top: auto;
+
+}
+
+.main form button:hover {
+    background: #357abd;
+    transform: scale(1.02);
+}
+
+.main form textarea {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    height: 100%;
+    min-height: 400px;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: white;
+    font-size: 16px;
+    color: #333;
+    resize: none;
+    font-family: inherit;
+    line-height: 1.5;
+    transition: border-color 0.3s ease;
+}
+
+.main form textarea:hover {
+    border-color: #999;
+}
+
+.main form textarea:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+
+
+
+
+

@@ -2,83 +2,78 @@
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <link rel="stylesheet" th:href="@{/css/account.css}">
+    <link rel="stylesheet" th:href="@{/css/popup.css}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <meta charset="UTF-8">
     <title th:text="${user.username} + ' - Особистий кабінет'"></title>
 </head>
 <body>
 
-<div class="container">
-    <header class="header">
-        <nav class="nav">
-            <form th:action="'/'" method="get">
-                <button type="submit" class="home-button">
-                    <i class='bx bxs-home'></i>
-                </button>
-            </form>
-
-            <h1>Інтернет-магазин різноманітних товарів</h1>
-
-            <div class="right-buttons">
-                <form th:action="'/cart/get'" method="get">
-                    <button type="submit" class="cart-button">
-                        <i class='bx bxs-cart'></i>
+<div th:if="${!wrongClient}">
+    <div class="container">
+        <header class="header">
+            <nav class="nav">
+                <form th:action="'/'" method="get">
+                    <button type="submit" class="home-button">
+                        <i class='bx bxs-home'></i>
                     </button>
                 </form>
 
-                <form th:action="'/account'" method="get">
-                    <button type="submit" class="account-button">
-                        <i class='bx bxs-user'></i>
-                    </button>
-                </form>
+                <h1>Інтернет-магазин різноманітних товарів</h1>
 
-                <form th:action="'/logout'" method="post">
-                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-                    <button type="submit" class="account-button">
-                        <i class='bx bx-log-out' ></i>
-                    </button>
-                </form>
-            </div>
-        </nav>
-    </header>
+                <div class="right-buttons">
+                    <form th:action="'/cart/get'" method="get">
+                        <button type="submit" class="cart-button">
+                            <i class='bx bxs-cart'></i>
+                        </button>
+                    </form>
 
-    <main class="main">
+                    <form th:action="'/account'" method="get">
+                        <button type="submit" class="account-button">
+                            <i class='bx bxs-user'></i>
+                        </button>
+                    </form>
 
-        <div th:if="${!wrongClient}">
+                    <form th:action="'/logout'" method="post">
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                        <button type="submit" class="account-button">
+                            <i class='bx bx-log-out' ></i>
+                        </button>
+                    </form>
+                </div>
+            </nav>
+        </header>
 
-            <div id="main-info-block">
-                <div class="info">
-                    <h1>Ваші дані</h1>
-                    <p>Логін: <span th:text="${user.username}"></span></p>
-                    <p>Ім'я: <span th:text="${user.firstName}"></span></p>
-                    <p>Прізвище: <span th:text="${user.lastName}"></span></p>
-                    <p>Номер телефону: <span th:text="${user.phoneNumber}"></span></p>
-                    <p>Адреса доставки: <span th:text="${user.address}"></span></p>
-                    <div sec:authorize="hasRole('ROLE_SELLER')">
-                        <p>Продано товарів на суму: <span th:text="${#numbers
+        <div class="sidebar">
+            <div class="info">
+                <h1>Ваші дані</h1>
+                <p>Логін: <span th:text="${user.username}"></span></p>
+                <p>Ім'я: <span th:text="${user.firstName}"></span></p>
+                <p>Прізвище: <span th:text="${user.lastName}"></span></p>
+                <p>Номер телефону: <span th:text="${user.phoneNumber}"></span></p>
+                <p>Адреса доставки: <span th:text="${user.address}"></span></p>
+                <div sec:authorize="hasRole('ROLE_SELLER')">
+                    <p>Продано товарів на суму: <span th:text="${#numbers
                      .formatInteger(user.moneyEarned, 0, 'POINT')
                      ?.replace('.', ' ')} + ' ₴'"></span></p>
-                    </div>
                 </div>
-
-                <div class="manage-panel" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <h1>Панель управління</h1>
-                    <form th:action="@{/admin/show-users}" method="get">
-                        <button type="submit">Користувачі</button>
-                    </form>
-                    <div class="add_category" sec:authorize="hasRole('ROLE_ADMIN')">
-                        <form th:action="'/admin/manage-categories'" method="get">
-                            <button type="submit">Категорії</button>
-                        </form>
-                    </div>
-                </div>
-
-
             </div>
 
+            <div class="manage-panel" sec:authorize="hasRole('ROLE_ADMIN')">
+                <h1>Панель управління</h1>
+                <form th:action="@{/admin/show-users}" method="get">
+                    <button type="submit">Користувачі</button>
+                </form>
+                <div class="add_category" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <form th:action="'/admin/manage-categories'" method="get">
+                        <button type="submit">Категорії</button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-
-            <h1>Список ваших замовлень</h1>
+        <div class="main">
+            <h1 class="top-h">Список ваших замовлень</h1>
             <div class="order-list">
                 <div class="order-card" th:each="order : ${myOrders}">
                     <div th:each="product : ${order.getProducts()}">
@@ -102,136 +97,192 @@
                         </a>
                     </div>
 
-                    <p th:text="'Загальна вартість: ' + ${#numbers
+                    <div class="sum-info">
+                        <p class="product-price" th:text="'Загальна вартість: ' + ${#numbers
                             .formatInteger(order.getPrice(), 0, 'POINT')
                             ?.replace('.', ' ')} + ' ₴'"></p>
-                    <p th:text="'Статус замовлення: ' + ${order.getStatus()}"></p>
+                        <p class="order-status" th:text="'Статус замовлення: ' + ${order.getStatus()}"></p>
 
-                    <form class="cancel-order-form" th:action="@{/order/cancel}" method="post">
-                        <input type="hidden" name="order_id" th:value="${order.id}" />
-                        <button type="submit">Скасувати замовлення</button>
-                    </form>
+                        <form class="cancel-order-form" th:action="@{/order/cancel}" method="post">
+                            <input type="hidden" name="order_id" th:value="${order.id}" />
+                            <button type="submit">Скасувати замовлення</button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
 
             <div sec:authorize="hasRole('ROLE_ADMIN')" class="admin-block">
-                <h1>Замовлення, які чекають підтвердження</h1>
-                <div class="order-card" th:each="order : ${allOrders}">
-                    <div th:each="product : ${order.getProducts()}">
-                        <a th:href="@{/product/{id}(id=${product.id})}" class="product-link">
-                            <div class="product-image">
-                                <img th:src="${product.imageUrl}" th:alt="${product.name}" />
-                            </div>
-                            <div class="product-info">
-                                <div class="higher">
-                                    <h4 class="product-price" th:text="${#numbers
+                <h1 class="top-h">Замовлення, які чекають підтвердження</h1>
+                <div class="order-list">
+                    <div class="order-card" th:each="order : ${allOrders}">
+                        <div class="customer-info">
+                            <h1 th:text="${order.getCustomer().username}"></h1>
+                            <p>Ім'я: <span th:text="${order.getCustomer().firstName}"></span></p>
+                            <p>Прізвище: <span th:text="${order.getCustomer().lastName}"></span></p>
+                            <p>Номер телефону: <span th:text="${order.getCustomer().phoneNumber}"></span></p>
+                            <p>Адреса доставки: <span th:text="${order.getCustomer().address}"></span></p>
+                        </div>
+
+                        <div th:each="product : ${order.getProducts()}">
+                            <a th:href="@{/product/{id}(id=${product.id})}" class="product-link">
+                                <div class="product-image">
+                                    <img th:src="${product.imageUrl}" th:alt="${product.name}" />
+                                </div>
+                                <div class="product-info">
+                                    <div class="higher">
+                                        <h4 class="product-price" th:text="${#numbers
                                         .formatInteger(product.price, 0, 'POINT')
                                         ?.replace('.', ' ')} + ' ₴'"></h4>
-                                    <h4 class="product-name" th:text="${product.name}"></h4>
-                                    <h4 class="product-category" th:if="${product.category != null}" th:text="${product.category.name}"></h4>
-                                    <h4 class="product-category" th:if="${product.category == null}">Без категорії</h4>
+                                        <h4 class="product-name" th:text="${product.name}"></h4>
+                                        <h4 class="product-category" th:if="${product.category != null}" th:text="${product.category.name}"></h4>
+                                        <h4 class="product-category" th:if="${product.category == null}">Без категорії</h4>
+                                    </div>
+                                    <p class="product-description"
+                                       th:text="${product.description}">
+                                    </p>
                                 </div>
-                                <p class="product-description"
-                                   th:text="${product.description}">
-                                </p>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
 
-                    <p th:text="'Загальна вартість: ' + ${#numbers
+                        <div class="sum-info">
+                            <p class="product-price" th:text="'Загальна вартість: ' + ${#numbers
                             .formatInteger(order.getPrice(), 0, 'POINT')
                             ?.replace('.', ' ')} + ' ₴'"></p>
-                    <p th:text="'Статус замовлення: ' + ${order.getStatus()}"></p>
+                            <p class="order-status" th:text="'Статус замовлення: ' + ${order.getStatus()}"></p>
 
-                    <form class="confirm-order-form" th:action="@{/admin/confirm-order}" method="post">
-                        <input type="hidden" name="order_id" th:value="${order.id}" />
-                        <button type="submit">Підтвердити замовлення</button>
-                    </form>
+                            <div class="buttons">
+                                <form class="confirm-order-form" th:action="@{/admin/confirm-order}" method="post">
+                                    <input type="hidden" name="order_id" th:value="${order.id}" />
+                                    <button type="submit">Підтвердити замовлення</button>
+                                </form>
 
-                    <form class="cancel-order-form" th:action="@{/order/cancel}" method="post">
-                        <input type="hidden" name="order_id" th:value="${order.id}" />
-                        <button type="submit">Скасувати замовлення</button>
-                    </form>
+                                <form class="cancel-order-form" th:action="@{/order/cancel}" method="post">
+                                    <input type="hidden" name="order_id" th:value="${order.id}" />
+                                    <button type="submit">Скасувати замовлення</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
 
             <div sec:authorize="hasRole('ROLE_SELLER')" class="seller-block">
-                <h1>Список ваших товарів</h1>
-                <div class="product-list">
-                    <div th:each="product : ${products}">
+                <h1 class="top-h">Список ваших товарів</h1>
+                <div class="products-grid">
+                    <div class="product-card" th:each="product : ${products}">
                         <a th:href="@{/product/{id}(id=${product.id})}" class="product-link">
                             <div class="product-image">
                                 <img th:src="${product.imageUrl}" th:alt="${product.name}" />
                             </div>
                             <div class="product-info">
-                                <div class="higher">
-                                    <h4 class="product-price" th:text="${#numbers
-                            .formatInteger(product.price, 0, 'POINT')
-                            ?.replace('.', ' ')} + ' ₴'"></h4>
-                                    <h4 class="product-name" th:text="${product.name}"></h4>
-                                    <h4 class="product-category" th:if="${product.category != null}" th:text="${product.category.name}"></h4>
-                                    <h4 class="product-category" th:if="${product.category == null}">Без категорії</h4>
-                                </div>
-                                <p class="product-description"
-                                   th:text="${product.description}">
-                                </p>
+                                <h4 class="product-name" th:text="${product.name}"></h4>
+                                <p class="product-price" th:text="${#numbers
+                                     .formatInteger(product.price, 0, 'POINT')
+                                     ?.replace('.', ' ')} + ' ₴'"></p>
                             </div>
                         </a>
 
-                        <form class="edit-product-form" th:action="@{/product/edit}" method="get">
-                            <input type="hidden" name="product_id" th:value="${product.id}" />
-                            <button type="submit">Редагувати публікацію</button>
-                        </form>
+                        <div class="buttons-block">
+                            <form class="edit-product-form" th:action="@{/product/edit}" method="get">
+                                <input type="hidden" name="product_id" th:value="${product.id}" />
+                                <button type="submit">Редагувати</button>
+                            </form>
 
-                        <form class="delete-product-form" th:action="@{/product/delete}" method="post">
-                            <input type="hidden" name="product_id" th:value="${product.id}" />
-                            <button type="submit">Видалити публікацію</button>
-                        </form>
+                            <form class="delete-product-form" th:action="@{/product/delete}" method="post">
+                                <input type="hidden" name="product_id" th:value="${product.id}" />
+                                <button type="submit">Видалити</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
+<div th:if="${wrongClient}">
+
+    <div class="container">
+
+        <!-- Спливаюче вікно -->
+        <div th:if="${message}" th:class="${'popup ' + (messageType == 'success' ? 'show success' : 'show error')}">
+            <div class="popup-content">
+                <p th:text="${message}"></p>
+                <form th:action="@{#}" method="get">
+                    <button type="submit" class="close-popup">&times;</button>
+                </form>
+            </div>
         </div>
 
+        <header class="header">
+            <nav class="nav">
+                <form th:action="'/'" method="get">
+                    <button type="submit" class="home-button">
+                        <i class='bx bxs-home'></i>
+                    </button>
+                </form>
 
-        <div th:if="${wrongClient}">
+                <h1>Інтернет-магазин різноманітних товарів</h1>
 
-            <h1>Інформація про продавця</h1>
+                <div class="right-buttons">
+                    <form th:action="'/cart/get'" method="get">
+                        <button type="submit" class="cart-button">
+                            <i class='bx bxs-cart'></i>
+                        </button>
+                    </form>
+
+                    <form th:action="'/account'" method="get">
+                        <button type="submit" class="account-button">
+                            <i class='bx bxs-user'></i>
+                        </button>
+                    </form>
+
+                    <form th:action="'/logout'" method="post">
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                        <button type="submit" class="account-button">
+                            <i class='bx bx-log-out' ></i>
+                        </button>
+                    </form>
+                </div>
+            </nav>
+        </header>
+
+        <div class="sidebar">
             <div class="info">
+                <h1>Інформація про продавця</h1>
                 <p>Логін: <span th:text="${user.username}"></span></p>
                 <p>Ім'я: <span th:text="${user.firstName}"></span></p>
                 <p>Прізвище: <span th:text="${user.lastName}"></span></p>
             </div>
+        </div>
 
-            <h1>Список товарів продавця</h1>
-            <div class="product-list">
-                <div th:each="product : ${products}">
+        <main class="main">
+            <h1 class="top-h">Список товарів продавця</h1>
+            <div class="products-grid">
+                <div th:each="product : ${products}" class="product-card">
                     <a th:href="@{/product/{id}(id=${product.id})}" class="product-link">
                         <div class="product-image">
                             <img th:src="${product.imageUrl}" th:alt="${product.name}" />
                         </div>
                         <div class="product-info">
-                            <div class="higher">
-                                <h4 class="product-price" th:text="${#numbers
+                            <h4 class="product-name" th:text="${product.name}"></h4>
+                            <p class="product-price" th:text="${#numbers
                             .formatInteger(product.price, 0, 'POINT')
-                            ?.replace('.', ' ')} + ' ₴'"></h4>
-                                <h4 class="product-name" th:text="${product.name}"></h4>
-                                <h4 class="product-category" th:if="${product.category != null}" th:text="${product.category.name}"></h4>
-                                <h4 class="product-category" th:if="${product.category == null}">Без категорії</h4>
-                            </div>
-                            <p class="product-description"
-                               th:text="${product.description}">
-                            </p>
+                            ?.replace('.', ' ')} + ' ₴'"></p>
                         </div>
                     </a>
+                    <form th:action="@{/cart/add}" method="post" class="add-to-cart-form">
+                        <input type="hidden" name="product_id" th:value="${product.id}" />
+                        <button type="submit" class="add-to-cart-button">
+                            <i class='bx bxs-cart'></i>
+                        </button>
+                    </form>
                 </div>
             </div>
-
-        </div>
-
-    </main>
+        </main>
+    </div>
 </div>
 
 </body>

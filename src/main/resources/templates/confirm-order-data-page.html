@@ -43,21 +43,26 @@
     </header>
 
     <main class="main">
-        <h1>Перевірте ваші дані, необхідні для створення замовлення</h1>
 
-        <p>Ім'я: <span th:text="${user.firstName}"></span></p>
-        <p>Прізвище: <span th:text="${user.lastName}"></span></p>
-        <p>Номер телефону: <span th:text="${user.phoneNumber}"></span></p>
-        <p>Адреса доставки: <span th:text="${user.address}"></span></p>
 
-        <form class="change-data-form" th:action="@{/order/form}" method="get">
-            <button type="submit">Змінити дані</button>
-        </form>
+        <div class="order-data">
+            <h1>Перевірте ваші дані, необхідні для створення замовлення</h1>
+            <p>Ім'я: <span th:text="${user.firstName}"></span></p>
+            <p>Прізвище: <span th:text="${user.lastName}"></span></p>
+            <p>Номер телефону: <span th:text="${user.phoneNumber}"></span></p>
+            <p>Адреса доставки: <span th:text="${user.address}"></span></p>
 
-        <form class="create-order-form" th:action="@{/order/create}" method="post">
-            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-            <button type="submit">Підтвердити замовлення</button>
-        </form>
+            <div class="buttons">
+                <form class="change-data-form" th:action="@{/order/form}" method="get">
+                    <button type="submit">Змінити дані</button>
+                </form>
+
+                <form class="create-order-form" th:action="@{/order/create}" method="post">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    <button type="submit">Підтвердити замовлення</button>
+                </form>
+            </div>
+        </div>
     </main>
 </div>
 

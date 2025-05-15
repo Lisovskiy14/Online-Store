@@ -1,0 +1,439 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&family=Overpass:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "M PLUS 1p", sans-serif;
+}
+
+/*Структуризація*/
+.container {
+    display: grid;
+    grid-template-areas:
+            "header header"
+            "sidebar main";
+    grid-template-rows: 100px auto;
+    grid-template-columns: 350px auto;
+    padding: 10px 300px;
+}
+
+.header {
+    grid-area: header;
+    background-color: #cbe691;
+    border-radius: 20px;
+    padding: 20px 50px;
+    margin: 10px;
+}
+
+.sidebar {
+    grid-area: sidebar;
+    border-radius: 20px;
+    padding: 0 0 10px;
+    margin: 10px;
+}
+
+.main {
+    grid-area: main;
+    background-color: white;
+    padding: 0 20px;
+    margin: 10px;
+}
+
+
+/*Header*/
+.header nav {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.header h1 {
+    flex: 1;
+    height: 100%;
+    text-align: center;
+}
+
+.right-buttons {
+    display: flex;
+    margin-left: auto;
+    gap: 20px;
+}
+
+.header button {
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header button:hover {
+    background: #333;
+    color: white;
+}
+
+.header button i {
+    font-size: 24px;
+    transition: transform 0.2s ease;
+}
+
+.header button:hover i {
+    transform: scale(1.2);
+}
+
+
+/* Sidebar */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.info {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.info h1 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.info p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.info span {
+    color: #333;
+    font-weight: 500;
+}
+
+
+/* Панель управління для адміна */
+.manage-panel {
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.manage-panel h1 {
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.manage-panel button {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    background-color: #0890cf;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.manage-panel button:hover {
+    background-color: #0d77bd;
+    font-size: 15px;
+}
+
+
+/* Список замовлень */
+.order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 80px;
+}
+
+.order-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.order-list .product-link {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+.order-list .product-image {
+    height: auto;
+    width: 300px;
+    overflow: hidden;
+}
+
+.order-list .product-image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.order-list .product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.order-list .product-info .higher {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    text-align: center;
+}
+
+.order-list .product-info .higher .product-category {
+    color: white;
+    background: #333;
+    padding: 5px 15px;
+    justify-content: center;
+    border-radius: 15px;
+}
+
+.order-list .sum-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.order-list .sum-info .order-status {
+    color: #333;
+}
+
+.order-list .sum-info .buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.order-list .sum-info .cancel-order-form button {
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 20px;
+    background-color: #b8272f;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.order-list .sum-info .cancel-order-form button:hover {
+    background-color: #91272d;
+}
+
+.order-list .sum-info .confirm-order-form button {
+    width: 210px;
+    height: 40px;
+    border: none;
+    border-radius: 20px;
+    background-color: #0890cf;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.order-list .sum-info .confirm-order-form button:hover {
+    background-color: #0d77bd;
+}
+
+.customer-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+
+/* Список товарів продавця */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.products-grid .product-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+    background: white;
+}
+
+.products-grid .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.products-grid .product-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.products-grid .product-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.products-grid .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.products-grid .product-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.products-grid .product-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+
+    flex: 1;
+    min-width: 0;
+
+    margin: 0 10px 0 0;
+    font-size: 1.1em;
+    color: #333;
+}
+
+.product-price {
+    font-size: 1.2em;
+    color: #0d77bd;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.products-grid .buttons-block {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px 15px;
+    gap: 10px;
+}
+
+.products-grid .buttons-block form {
+    width: 50%;
+    text-align: center;
+    background: #fff;
+}
+
+.products-grid .buttons-block .edit-product-form button {
+    width: 100%;
+    height: 40px;
+    background-color: #0890cf;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.products-grid .buttons-block .edit-product-form button:hover {
+    background-color: #0d77bd;
+    font-size: 15px;
+}
+
+.products-grid .buttons-block .delete-product-form button {
+    width: 100%;
+    height: 40px;
+    background-color: #b8272f;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.products-grid .buttons-block .delete-product-form button:hover {
+    background-color: #91272d;
+    font-size: 15px;
+}
+
+.products-grid .add-to-cart-form {
+    padding: 0 15px 15px;
+    text-align: center;
+    background: #fff;
+}
+
+.products-grid .add-to-cart-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0890cf;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.products-grid .add-to-cart-button i {
+    font-size: 20px;
+    transition: transform 0.2s ease;
+}
+
+.products-grid .add-to-cart-button:hover i {
+    transform: scale(1.2);
+}
+
+.products-grid .add-to-cart-button:hover {
+    background-color: #0d77bd;
+}
+
+
+
+/*Main*/
+.main .top-h {
+    text-align: center;
+    margin-bottom: 20px;
+}
+

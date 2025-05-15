@@ -58,28 +58,27 @@
     </header>
 
     <div class="sidebar">
-        <div class="sidebar-header">
-            <h3>Каталог</h3>
-        </div>
+        <div class="info">
+            <div class="sidebar-header">
+                <h3>Каталог</h3>
+            </div>
 
-        <div th:each="category : ${categories}" class="category">
-            <a th:href="@{/catalog/category/{slug}(slug=${category.slug})}"
-               th:text="${category.name}">Назва категорії</a>
+            <div th:each="category : ${categories}" class="category">
+                <a th:href="@{/catalog/category/{slug}(slug=${category.slug})}"
+                   th:text="${category.name}">Назва категорії</a>
+            </div>
         </div>
     </div>
 
     <div class="main">
-        <h3>Наші товари</h3>
 
-        <div class="search-container">
-            <form th:action="'/search'" method="get">
+        <div class="high-panel">
+            <form class="search-form" th:action="'/search'" method="get">
                 <input type="text" name="keyword" placeholder="Введіть назву товару...">
                 <button type="submit">Пошук</button>
             </form>
-        </div>
 
-        <div class="add_product" sec:authorize="hasRole('ROLE_SELLER')">
-            <form th:action="'/product/create'" method="get">
+            <form sec:authorize="hasRole('ROLE_SELLER')" class="add-product-form" th:action="'/product/create'" method="get">
                 <button type="submit">Додати публікацію</button>
             </form>
         </div>

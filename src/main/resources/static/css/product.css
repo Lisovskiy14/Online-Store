@@ -51,8 +51,7 @@
     grid-area: footer;
     background-color: white;
     padding: 20px;
-    margin: 40px 10px 10px 10px;
-    align-items: center;
+    margin: 40px 10px 10px 200px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -212,8 +211,90 @@
 
 
 /*Footer*/
-
-.footer .h1 {
+.footer h1 {
     font-size: 28px;
     text-align: center;
+}
+
+.create-review-form {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.create-review-form textarea {
+    height: calc(1.5em * 2 + 30px); /* 3 рядки * висота рядка + padding */
+    width: 800px;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: white;
+    font-size: 16px;
+    color: #333;
+    resize: none;
+    font-family: inherit;
+    line-height: 1.5;
+    transition: border-color 0.3s ease;
+    min-height: unset;
+}
+
+.create-review-form textarea:hover {
+    border-color: #999;
+}
+
+.create-review-form textarea:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.create-review-form button {
+    width: 140px;
+    height: 40px;
+    border: none;
+    border-radius: 15px;
+    background-color: #0890cf;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.create-review-form button:hover {
+    background-color: #0d77bd;
+}
+
+
+.review {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-size: 18px;
+}
+
+.review .author {
+    color: #739922;
+    font-weight: bold;
+}
+
+.review form {
+    margin-left: 40px;
+}
+
+.review form button {
+    width: 150px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    background-color: #b8272f;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.review form button:hover {
+    background-color: #91272d;
 }

@@ -1,8 +1,6 @@
 package com.example.OnlineStore.controllers;
 
 import com.example.OnlineStore.models.Product;
-import com.example.OnlineStore.models.User;
-import com.example.OnlineStore.models.enums.Role;
 import com.example.OnlineStore.repositories.UserRepository;
 import com.example.OnlineStore.services.CategoryService;
 import com.example.OnlineStore.services.ProductService;
