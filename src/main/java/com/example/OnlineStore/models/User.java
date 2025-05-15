@@ -3,8 +3,6 @@ package com.example.OnlineStore.models;
 import com.example.OnlineStore.models.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NonNull;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

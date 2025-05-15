@@ -2,9 +2,7 @@ package com.example.OnlineStore.services;
 
 import com.example.OnlineStore.models.Product;
 import com.example.OnlineStore.models.User;
-import com.example.OnlineStore.repositories.CategoryRepository;
 import com.example.OnlineStore.repositories.ProductRepository;
-import com.example.OnlineStore.repositories.ReviewRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -4,7 +4,6 @@ import com.example.OnlineStore.models.Product;
 import com.example.OnlineStore.services.CartService;
 import com.example.OnlineStore.services.ProductService;
 import com.example.OnlineStore.services.UserService;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
